@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eseict.gondo.dao.BoardDAO">
+
+<!-- 01. insert_글 쓰기 -->
+	<insert
+		id="insertBoard"
+		parameterType="BoardVO"
+	>
+		insert into board (
+		board_subject,
+		board_content,
+		user_idx,
+		)
+		values(
+		#{user_id},
+		#{user_pw},
+		#{user_name}
+		)
+	</insert>
+
+<!-- 02. select_글 1개 가져오기(user_idx) -->
+	<select
+		id="selectByIdx"
+		parameterType="int"
+		resultType="UserVO"
+	>
+		select * from user where user_idx=#{user_idx}
+	</select>
+
+<!-- 02. select_글 1개 가져오기(user_id) -->
+	<select
+		id="selectByUserId"
+		parameterType="String"
+		resultType="UserVO"
+	>
+		select * from user where user_id=#{user_id}
+	</select>
+
+<!-- 03. update_글 수정하기 -->
+	<update
+		id="updateUser"
+		parameterType="int"
+	>
+		UPDATE user SET
+		user_pw = #{user_pw},
+		user_name = #{user_name },
+		WHERE
+		user_id = #{user_id }
+	</update>
+
+
+<!-- 04. delete_글 삭제하기 -->
+	<delete
+		id="deleteUser"
+		parameterType="UserVO"
+	>
+		delete from user where user_idx=#{user_idx}
+	</delete>
+
+
+</mapper>
+
