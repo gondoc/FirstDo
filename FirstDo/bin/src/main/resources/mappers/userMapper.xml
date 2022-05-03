@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eseict.gondo.dao.UserDAO">
+
+<!-- 로그인 -->
+	<select
+		id="loginUser"
+		resultType="UserVO"
+	>
+		select * from user 
+		where 
+			user_id = #{user_id } and user_pw = #{user_pw}
+	</select>
+
+<!-- 회원가입 -->
+	<insert
+		id="insertUser"
+		parameterType="UserVO"
+	>
+		insert into user (
+		user_id,
+		user_pw,
+		user_name
+		)
+		values(
+		#{user_id},
+		#{user_pw},
+		#{user_name}
+		)
+	</insert>
+
+<!-- 1개 가져오기 user_idx -->
+	<select
+		id="selectByIdx"
+		parameterType="int"
+		resultType="UserVO"
+	>
+		select * from user where user_idx=#{user_idx}
+	</select>
+
+<!-- 1개 가져오기 user_id -->
+	<select
+		id="selectByUserId"
+		parameterType="String"
+		resultType="UserVO"
+	>
+		select * from user where user_id=#{user_id}
+	</select>
+
+<!-- 회원정보수정 -->
+	<update
+		id="updateUser"
+		parameterType="int"
+	>
+		UPDATE user SET
+		user_pw = #{user_pw},
+		user_name = #{user_name },
+		WHERE
+		user_id = #{user_id }
+	</update>
+
+<!-- 회원탈퇴 -->
+	<delete
+		id="deleteUser"
+		parameterType="UserVO"
+	>
+		delete from user where user_idx=#{user_idx}
+	</delete>
+
+
+</mapper>
+
