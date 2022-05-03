@@ -16,13 +16,13 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDAO userDAO;
 	
-	@Autowired(required = false)
-	private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+//	@Autowired(required = false)
+//	private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
 	@Override
 	// 로그인 기능
 	public String loginUser(String user_id, String user_pw) {
-		log.info("UserServiceImpl-loginUser 호출 : user_id{}, user_pw{}", user_id, user_pw);
+		log.info("UserServiceImpl-loginUser 호출 : user_id {}, user_pw {}", user_id, user_pw);
 		UserVO dbUserVO = null;
 		String userLoginFlag = "0"; // 0 실패, 1 성공
 		if (user_id != null && user_pw != null) {
@@ -42,10 +42,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	// 회원가입
 	public String insertUser(UserVO userVO) {
-		log.info("UserServiceImpl-insertUser 회원가입 호출 userVO{}", userVO);
-		// userVO에 넘겨 받은 값이 있다면
+		log.info("UserServiceImpl-insertUser 호출 userVO{}", userVO);
 		if (userVO != null) {
-			// userVO에 값을 넣어준다.
 			userDAO.insertUser(userVO);
 			return "/home";
 		}
@@ -54,7 +52,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserVO selectByIdx(int user_idx) {
-		log.info("UserServiceImpl-selectByIdx 호출 user_idx{}", user_idx);
+		log.info("UserServiceImpl-selectByIdx 호출 user_idx {}", user_idx);
 		UserVO dbUserVO = null;
 		if (user_idx != 0) {
 			dbUserVO = userDAO.selectByIdx(user_idx);
@@ -65,12 +63,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserVO selectByUserId(String user_id) {
-		log.info("UserServiceImpl-selectByUserId 호출 user_id{}", user_id);
+		log.info("UserServiceImpl-selectByUserId 호출 user_id {}", user_id);
 		UserVO dbUserVO = null;
 		if (user_id != null) {
 			dbUserVO = userDAO.selectByUserId(user_id);
 		}
-		log.info("UserServiceImpl-selectByUserId 리턴 dbUserVO{}", dbUserVO);
+		log.info("UserServiceImpl-selectByUserId 리턴 dbUserVO {}", dbUserVO);
 		return dbUserVO;
 	}
 
@@ -84,7 +82,7 @@ public class UserServiceImpl implements UserService {
 			log.info("UserServiceImpl-updateUser 사용자 수정 전 정보 확인 userVO{}", userVO);
 			log.info("UserServiceImpl-updateUser 사용자 수정 희망 정보 확인 dbUserVO{}", dbUserVO);
 			// 회원정보 수정
-			userVO.setUser_pw(bCryptPasswordEncoder.encode(userVO.getUser_pw())); // 비번 암호화
+//			userVO.setUser_pw(bCryptPasswordEncoder.encode(userVO.getUser_pw())); // 비번 암호화
 			userDAO.updateUser(userVO);
 			// 수정된 정보를 다시 얻는다.
 			dbUserVO = userDAO.selectByUserId(userVO.getUser_id());
