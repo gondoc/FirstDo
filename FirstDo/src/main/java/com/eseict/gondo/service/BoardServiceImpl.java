@@ -133,6 +133,7 @@ public class BoardServiceImpl implements BoardService {
 				try {
 					log.info("BoardService-deleteBoard 유효한 계정 확인, 원본 글 작성자와 삭제 희망자간 일치함 확인");
 					boardDAO.deleteBoard(boardVO.getBoard_idx());
+					log.info("BoardService-deleteBoard 삭제 성공 flag = 1");
 					return deleteBoardFlag = 1;
 				} catch (Exception e) {
 					log.info("BoardService-deleteBoard deleteBoard 실행중 오류 확인");
