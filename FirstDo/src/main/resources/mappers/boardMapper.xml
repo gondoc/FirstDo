@@ -12,12 +12,12 @@
 		insert into board (
 		board_subject,
 		board_content,
-		user_idx,
+		user_idx
 		)
 		values(
-		#{user_id},
-		#{user_pw},
-		#{user_name}
+		#{board_subject},
+		#{board_content},
+		#{user_idx}
 		)
 	</insert>
 
@@ -25,9 +25,9 @@
 	<select
 		id="selectByIdx"
 		parameterType="int"
-		resultType="UserVO"
+		resultType="BoardVO"
 	>
-		select * from user where user_idx=#{user_idx}
+		select * from board where board_idx=#{board_idx}
 	</select>
 
 	<!-- 02. select_글 1개 가져오기(user_id) -->
@@ -46,7 +46,7 @@
 	>
 		UPDATE user SET
 		user_pw = #{user_pw},
-		user_name = #{user_name },
+		user_name = #{user_name }
 		WHERE
 		user_id = #{user_id }
 	</update>
@@ -62,7 +62,7 @@
 
 	<!-- 05. select_글 목록 가져오기 -->
 	<select id="selectList">
-	select * from board
+		select * from board
 	</select>
 
 </mapper>

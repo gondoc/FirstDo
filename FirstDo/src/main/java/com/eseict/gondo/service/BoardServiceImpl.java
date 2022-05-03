@@ -30,34 +30,37 @@ public class BoardServiceImpl implements BoardService {
 	// insert 중 boardVO에 user_idx 외래키 처리 할 것.
 	// flag 처리 할 것.
 	public int insertBoard(BoardVO boardVO, String user_id) {
-		log.info("BoardService-insertUser 호출 : boardVO {}", boardVO);
-		log.info("BoardService-insertUser 호출 : user_id {}", user_id);
+		log.info("BoardServiceImpl-insertBoard 호출 : boardVO {}", boardVO);
+		log.info("BoardServiceImpl-insertBoard 호출 : user_id {}", user_id);
 		UserVO dbUserVO = null;
 		int insertBoardFlag = 0; // 0 실패, 1 성공
 		// 작성 게시글 확인, 유저 아이디 확인
 		if (boardVO != null && user_id != null) {
-			log.info("BoardService-insertUser boardVO, user_id 존재 확인");
+			log.info("BoardServiceImpl-insertBoard boardVO, user_id 존재 확인");
 			dbUserVO = userDAO.selectByUserId(user_id);
 			if (dbUserVO != null) {
-				log.info("BoardService-insertUser dbUserVO 유효함 {}", dbUserVO);
+				log.info("BoardServiceImpl-insertBoard dbUserVO 유효함 {}", dbUserVO);
 				try {
-					log.info("BoardService-insertUser 외래키 set dbUserVO.getUser_idx() {}", dbUserVO.getUser_idx());
+					log.info("BoardService-insertBoard 외래키 set dbUserVO.getUser_idx() {}", dbUserVO.getUser_idx());
 					boardVO.setUser_idx(dbUserVO.getUser_idx());
+					log.info("BoardService-insertBoard boardVO insert 시도 {}", boardVO);
 					boardDAO.insertBoard(boardVO);
+					log.info("BoardService-insertBoard 글 쓰기 성공 insertBoardFlag = 1 리턴");
 					return insertBoardFlag = 1;
 				} catch (Exception e) {
-					log.info("BoardService-insertUser insertBoard 실행중 오류발생");
-					log.info("BoardService-insertUser insertBoard insertBoardFlag = 0 리턴");
+					log.info("BoardServiceImpl-insertBoard insertBoard 실행중 오류발생");
+					log.info("BoardServiceImpl-insertBoard insertBoard insertBoardFlag = 0 리턴");
+					e.printStackTrace();
 					return insertBoardFlag;
 				}
 			} else {
-				log.info("BoardService-insertUser dbUserVO null 유저가 유효하지 않음");
-				log.info("BoardService-insertUser insertBoard insertBoardFlag = 0 리턴");
+				log.info("BoardServiceImpl-insertBoard dbUserVO null 유저가 유효하지 않음");
+				log.info("BoardServiceImpl-insertBoard insertBoard insertBoardFlag = 0 리턴");
 				return insertBoardFlag;
 			}
 		} else {
-			log.info("BoardService-insertUser boardVO, user_id 미존재");
-			log.info("BoardService-insertUser insertBoard insertBoardFlag = 0 리턴");
+			log.info("BoardServiceImpl-insertBoard boardVO, user_id 미존재");
+			log.info("BoardServiceImpl-insertBoard insertBoard insertBoardFlag = 0 리턴");
 			return insertBoardFlag;
 		}
 	}
