@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.eseict.gondo.dao.BoardDAO">
 
-<!-- 01. insert_글 쓰기 -->
+	<!-- 01. insert_글 쓰기 -->
 	<insert
 		id="insertBoard"
 		parameterType="BoardVO"
@@ -21,7 +21,7 @@
 		)
 	</insert>
 
-<!-- 02. select_글 1개 가져오기(user_idx) -->
+	<!-- 02. select_글 1개 가져오기(user_idx) -->
 	<select
 		id="selectByIdx"
 		parameterType="int"
@@ -30,7 +30,7 @@
 		select * from user where user_idx=#{user_idx}
 	</select>
 
-<!-- 02. select_글 1개 가져오기(user_id) -->
+	<!-- 02. select_글 1개 가져오기(user_id) -->
 	<select
 		id="selectByUserId"
 		parameterType="String"
@@ -39,7 +39,7 @@
 		select * from user where user_id=#{user_id}
 	</select>
 
-<!-- 03. update_글 수정하기 -->
+	<!-- 03. update_글 수정하기 -->
 	<update
 		id="updateUser"
 		parameterType="int"
@@ -52,7 +52,7 @@
 	</update>
 
 
-<!-- 04. delete_글 삭제하기 -->
+	<!-- 04. delete_글 삭제하기 -->
 	<delete
 		id="deleteUser"
 		parameterType="UserVO"
@@ -60,6 +60,10 @@
 		delete from user where user_idx=#{user_idx}
 	</delete>
 
+	<!-- 05. select_글 목록 가져오기 -->
+	<select id="selectList">
+	select * from board
+	</select>
 
 </mapper>
 
