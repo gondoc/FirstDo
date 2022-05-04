@@ -43,17 +43,22 @@ public class BoardController {
 				try {
 					log.info("BoardController-insertBoard 유효한 dbUserVO 확인 {}", dbUserVO);
 					boardService.insertBoard(boardVO, user_id);
+					log.info("BoardController-insertBoard insertBoard 성공");
+					log.info("BoardController-insertBoard return flag 1");
 					return insertBoardFlag = 1;
 				} catch (Exception e) {
 					log.info("BoardController-insertBoard insertBoard 중 오류 발생");
+					log.info("BoardController-insertBoard return flag 0");
 					return insertBoardFlag;
 				}
 			} else {
 				log.info("BoardController-insertBoard 유효하지 않은 계정");
+				log.info("BoardController-insertBoard return flag 2");
 				return insertBoardFlag = 2;
 			}
 		} else {
 			log.info("BoardController-insertBoard boardVO == null || user_id == null");
+			log.info("BoardController-insertBoard return flag 0");
 			return insertBoardFlag;
 		}
 	}
@@ -161,6 +166,7 @@ public class BoardController {
 		} else {
 			log.info("BoardController-deleteBoard 원본 글 작성자와 작성 글 삭제 요청자 일치");
 			boardService.deleteBoard(boardVO, user_id);
+			log.info("BoardController-deleteBoard 게시글 삭제 최종 완료 flag = 1");
 			return deleteBoardFlag = 1;
 		}
 	}

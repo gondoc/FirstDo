@@ -16,6 +16,10 @@
 게시글 삭제하기
 */
 
+
+select * from board order by board_idx desc 
+
+
 -- 유저 테이블 생성
 CREATE TABLE IF NOT EXISTS `firstdb`.`user` (
   `user_idx` INT NOT NULL AUTO_INCREMENT,
@@ -34,7 +38,7 @@ insert into user (
 user_id, user_pw, user_name
 )
 values
-('gondo1', '1234', 'gondo1');
+('gondo', '1234', 'gondo');
 
 select * from user;
 
@@ -65,5 +69,10 @@ UPDATE `user` SET
 WHERE
 	user_id = #{user_id }
 	
+	
+select * from board where board_idx=1
+
+select * from user;
+			
 		
 		
