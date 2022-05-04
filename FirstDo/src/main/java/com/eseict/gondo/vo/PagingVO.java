@@ -33,34 +33,25 @@ public class PagingVO<T> {
 	}
 
 	private void calc() {
-		// 나머지 값들은 계산해서 얻는다.
-		// 유효성 검사
-		if(currentPage<1) currentPage = 1; // 현재 페이지가 1보다 적다면 1페이지를 갖는다.
-		if(pageSize<1) pageSize=10; // 1페이지당 글 수가 1보다 적으면 10을 가지자
-		if(blockSize<1) blockSize=10;
-		// 전체 개수가 있을때만 계산
+		if(currentPage<1) currentPage = 1;
+		if(pageSize<2) pageSize = 10;
+		if(blockSize<2) blockSize = 10;
+		
 		if(totalCount>0) {
-			// 전체페이지 = (전체개수-1)/페이지당 글수 + 1
 			totalPage = (totalCount-1)/pageSize + 1;
-			// 현재 페이지가 전체 페이지수 보다 크면 않된다.
 			if(currentPage>totalPage) currentPage = 1;
 			
-			// 시작번호 = (현재페이지-1)*페이지사이즈
-			startNo = (currentPage-1) * pageSize + 1; // 오라클 +1을 한다. ========================> 이 부분 변경		
-
-			// 끝번호 = 시작번호 + 페이지사이즈 - 1
-			endNo = startNo + pageSize - 1; 
-			// 끝번호가 전체 개수보다 클 수 없다.
+			startNo = (currentPage-1) * pageSize; // 0, 10, 20, .....
+			endNo   = startNo + pageSize - 1;
+			if(endNo>=totalCount) {
+				endNo = totalCount-1;
+			}
 			
-			// if(endNo>=totalCount) endNo = totalCount-1; // 오라클 -1을 안한다.
-			if(endNo>totalCount) endNo = totalCount; // 오라클의 경우 ========================> 이 부분 변경
-			
-			// 시작페이지 = (현재페이지-1)/페이지사이즈 * 페이지사이즈   + 1;
-			startPage = (currentPage-1)/pageSize * pageSize + 1;
-			// 마지막페이지 = 시작페이지 + 블록사이즈 - 1
-			endPage = startPage + blockSize -1;
-			// 마지막페이지는 전체페이지를 넘을 수 없다.
-			if(endPage>totalPage) endPage = totalPage;
+			startPage = (currentPage-1)/blockSize * blockSize + 1; // 1, 11, 21 ...
+			endPage = startPage + blockSize - 1;
+			if(endPage>totalPage) {
+				endPage = totalPage;
+			}
 		}
 	}
 
