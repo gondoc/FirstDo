@@ -39,6 +39,7 @@
 	<delete id="deleteBoard" parameterType="int">
 		delete from board
 		where board_idx=#{board_idx}
+
 	</delete>
 
 	<!-- 05. select_글 목록 가져오기 -->
