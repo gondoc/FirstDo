@@ -5,9 +5,18 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="UTF-8">
 <title>login</title>
+<style type="text/css">
+.main-head {
+	text-align: center;
+	margin: 1em;
+	border: 2px solid black;
+	font-size: 15pt;
+}
+</style>
 <script type="text/javascript">
 	function formCheck() {
 		var id_value = $("#user_id");
@@ -29,7 +38,11 @@
 	}
 </script>
 </head>
+
 <body>
+	<div class="main-head">
+		<h2>LoginPage</h2>
+	</div>
 	<c:if test="${user==null }">
 		<form action="/main/login" method="post" onsubmit="return formCheck();">
 			<div>
@@ -58,4 +71,5 @@
 
 
 </body>
+
 </html>
