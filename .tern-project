@@ -7,12 +7,10 @@
     "outline": {
       
     },
-    "jscs": {
-      "config": {
-        
-      }
+    "complete_strings": {
+      
     },
-    "es_modules": {
+    "jscs": {
       
     },
     "browser-extension": {
@@ -29,13 +27,9 @@
     },
     "jquery-extension": {
       
-    },
-    "jquery-mobile1.5": {
-      
     }
   },
   "libs": [
-    "ecma5",
     "browser",
     "jquery"
   ]

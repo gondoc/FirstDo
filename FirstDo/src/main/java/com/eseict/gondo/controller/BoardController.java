@@ -14,6 +14,7 @@ import com.eseict.gondo.vo.BoardVO;
 import com.eseict.gondo.vo.UserVO;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -27,6 +28,7 @@ public class BoardController {
 	@Autowired
 	private UserService userService;
 
+	@ApiOperation(value = "글 작성", notes = "유효한 계정이어야 하며, user_idx가 외래키로 지정되어 있습니다.")
 	@PostMapping(value = "/insertBoard")
 	// 글 쓰기
 	// 유효한 계정일 것.
@@ -63,6 +65,7 @@ public class BoardController {
 		}
 	}
 
+	@ApiOperation(value = "상세보기", notes = "로그인한 계정이 유효한 계정이어야 합니다.")
 	@PostMapping(value = "/selectByIdx")
 	// 글 상세보기
 	// 유효한 boardVO 객체일 것.
@@ -89,7 +92,8 @@ public class BoardController {
 		}
 		return new BoardVO();
 	}
-
+	
+	@ApiOperation(value = "글 수정", notes = "원본 글 작성자와 수정 희망자가 일치해야 정상 동작합니다.")
 	@PostMapping(value = "/updateBoard")
 	// 글 수정하기
 	// 유효한 계정일 것.
@@ -131,7 +135,8 @@ public class BoardController {
 			return updateBoardFlag;
 		}
 	}
-
+	
+	@ApiOperation(value = "글 삭제", notes = "원본 글 작성자와 삭제 희망자가 일치해야 정상 동작합니다.")
 	@PostMapping(value = "/deleteBoard")
 	// 글 삭제하기
 	// 유효한 계정일 것.

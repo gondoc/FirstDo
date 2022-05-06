@@ -10,11 +10,13 @@
 		board (
 		board_subject,
 		board_content,
+		board_regDate,
 		user_idx
 		)
 		values(
 		#{board_subject},
 		#{board_content},
+		#{board_regDate},
 		#{user_idx}
 		)
 	</insert>

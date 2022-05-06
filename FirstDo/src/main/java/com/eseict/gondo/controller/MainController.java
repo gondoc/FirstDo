@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+@RequestMapping(value = "/")
 public class MainController {
 
 	@Autowired
@@ -28,18 +28,27 @@ public class MainController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = "/", method = RequestMethod.POST)
-	@ResponseBody
-	public ModelAndView selectBoardList(Model model) {
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
+	public ModelAndView main() {
 		ModelAndView mv = new ModelAndView();
-		log.info("MainController-selectBoardList 호출");
+		log.info("MainController-main 호출");
 		List<BoardVO> boardList = boardService.selectBoardList();
 		log.info("MainController-selectBoardList boardList {} : ", boardList);
 		mv.addObject("boardList", boardList);
-		mv.setViewName("/home");
+		mv.setViewName("/main");
+		log.info("MainController-selectBoardList mv {} : ", mv);
 		return mv;
 	}
-
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ModelAndView login() {
+		ModelAndView mv = new ModelAndView();
+		log.info("MainController-login 호출");
+		mv.setViewName("/login");
+		log.info("MainController-login login.jsp 이동");
+		return mv;
+	}
+	
 	@PostMapping(value = "/BoardList")
 	@ResponseBody
 	// public String selectList(@ModelAttribute CommVO commVO, Model model) {

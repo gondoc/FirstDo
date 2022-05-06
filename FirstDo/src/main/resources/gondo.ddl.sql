@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `firstdb`.`board` (
   `board_idx` INT NOT NULL AUTO_INCREMENT,
   `board_subject` VARCHAR(50) NOT NULL,
   `board_content` VARCHAR(100) NOT NULL,
+  `board_regDate` VARCHAR(100) NOT NULL,
   `user_idx` INT NOT null,
   `boardcol1` VARCHAR(45) NULL,
   `boardcol2` VARCHAR(45) NULL,
