@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -60,30 +63,11 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/user")
-	public ModelAndView insertUser(UserVO userVO) {
+	public ModelAndView insertUser(@RequestPart UserVO userVO) {
 		log.info("UserController-insertUser userVO {} : ", userVO);
 		ModelAndView mv = new ModelAndView();
 		UserVO dbUserVO = null;
 		String bcryptUserPassword = "";
-		log.info("UserController-insertUser 아이디 검증 userVO.getUser_id() {} : ", userVO.getUser_id());
-		if (userVO.getUser_id() == null) {
-			log.info("UserController-insertUser 아이디 검증 중 오류 발생");
-			mv.addObject("msg", "잘못된 접근입니다.");
-			mv.setViewName("/error");
-			return mv;
-		}
-		log.info("UserController-insertUser 이름 검증 userVO.getUser_name() {} : ", userVO.getUser_name());
-		if (userVO.getUser_name() == null) {
-			mv.addObject("msg", "잘못된 접근입니다.");
-			mv.setViewName("/error");
-			return mv;
-		}
-		log.info("UserController-insertUser 비밀번호 검증 userVO.getUser_pw() {} : ", userVO.getUser_pw());
-		if (userVO.getUser_pw() == null) {
-			mv.addObject("msg", "잘못된 접근입니다.");
-			mv.setViewName("/error");
-			return mv;
-		}
 		if (userVO != null) {
 			log.info("UserController-insertUser userVO 검증 통과 insertUser Service 호출");
 			BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
@@ -92,11 +76,46 @@ public class UserController {
 			log.info("UserController-insertUser 회원가입 시도 전 유저 비밀번호 암호화(Bcrypt) 완료");
 			userService.insertUser(userVO);
 			log.info("UserController-insertUser 회원가입 완료 ");
-			mv.addObject("msg", "회원가입을 환영합니다.");
-			mv.setViewName("/login");
-			return mv;
+			dbUserVO = userService.selectByUserId(userVO.getUser_id());
+			if (dbUserVO == null) {
+				mv.addObject("flag", 0);
+				mv.addObject("msg", "DB 저장 실패, 에러페이지로 이동합니다.");
+				mv.setViewName("/error");
+				return mv;
+			} else {
+				mv.addObject("flag", 1);
+				mv.addObject("msg", "DB 저장 성공, 로그인페이지로 이동합니다.");
+				mv.setViewName("/login");
+				return mv;
+			}
 		}
+		mv.setViewName("/main");
 		return mv;
+	}
+
+	@PutMapping(value = "/user")
+	public int updateUser(UserVO userVO) {
+		ModelAndView mv = new ModelAndView();
+		int updateUserFlag = 0;
+		UserVO dbUserVO = userService.selectByIdx(userVO.getUser_idx());
+		if (dbUserVO == userVO) {
+			mv.addObject("msg", "수정된 회원정보가 없습니다.");
+			mv.setViewName("/main");
+
+		}
+		if (userVO != null) {
+			userService.updateUser(userVO);
+			mv.addObject("msg", "회원정보가 정상적으로 수정되었습니다.");
+			mv.setViewName("/main");
+			updateUserFlag = 1;
+		}
+		return updateUserFlag;
+	}
+
+	@DeleteMapping(value = "/user")
+	public int deleteUser(UserVO userVO) {
+		int deleteUserFlag = 0; // 0 실패, 1 성공
+		return deleteUserFlag;
 	}
 
 }

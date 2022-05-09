@@ -15,6 +15,9 @@
     "es_modules": {
       
     },
+    "doc_comment": {
+      "strong": true
+    },
     "browser-extension": {
       
     },
@@ -22,15 +25,6 @@
       
     },
     "bootstrap": {
-      
-    },
-    "jquery-ui1-12": {
-      
-    },
-    "jquery-extension": {
-      
-    },
-    "jquery-mobile1.5": {
       
     }
   },

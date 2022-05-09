@@ -1,7 +1,7 @@
 
 //--------------------------------------------------------------------------
 // 데이터를 POST로 전송하는 함수
-//               (주소, 전달값 JSON, 점송메서드)  
+//               (주소, 전달값 JSON, 전송메서드)  
 function SendPost(path, params, method) {
 	//alert(params);
     method = method || "post"; // 메서드가 없으면 기본 POST전송

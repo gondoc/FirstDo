@@ -25,6 +25,5 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter {
 		.csrf().disable()
 		.formLogin().disable()
 		.headers().frameOptions().disable();
-		
 	}
 }

@@ -14,3 +14,28 @@ flag를 써서 예외처리
 
 5. log.info("... {}", Object); 활용
 {}안에 Object가 들어가는 형태
+
+예외처리 
+enum 고려할 것.
+
+경로 지정 유의.
+css 파일 따로 옮길 것
+
+응답 보내는걸로 고쳐볼 것	postgraphile
+restApi는 responseEntity<T>로 작업해볼것.
+ResponseEntity<T> 
+
+코드리뷰 
+중간 : 수 1회
+최종 : 금 1회
+
+로그인 제외 게시판 
+crud 할 것. 
+
+jstl에서 ajax로 바꿀 것.
+
+바닐라 - jquery 상황에 맞게 고려
+
+타임리프 + js 형태로 작업함.
+
+추후 react, postgraphile

@@ -1,5 +1,6 @@
 package com.eseict.gondo.service;
 
+import com.eseict.gondo.dao.BoardDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,17 @@ import lombok.extern.slf4j.Slf4j;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
+//	@Autowired(required = false)
+//	private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
 	@Autowired
 	private UserDAO userDAO;
 
-//	@Autowired(required = false)
-//	private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+	public UserServiceImpl(UserDAO userDAO) {
+		super();
+		this.userDAO = userDAO;
+	}
+
 
 	@Override
 	// 로그인 기능

@@ -17,6 +17,8 @@
 	</properties>
 	<dependencies>
 
+
+
 		<!-- springdoc-openapi-ui dependency -->
 		<dependency>
 			<groupId>org.springdoc</groupId>

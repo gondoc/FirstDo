@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.eseict.gondo.dao.BoardDAO;
@@ -17,11 +18,17 @@ import lombok.extern.slf4j.Slf4j;
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
 
-	@Autowired
+//	@Autowired
 	private UserDAO userDAO;
 
-	@Autowired
+//	@Autowired
 	private BoardDAO boardDAO;
+
+	public BoardServiceImpl(UserDAO userDAO, BoardDAO boardDAO) {
+		super();
+		this.userDAO = userDAO;
+		this.boardDAO = boardDAO;
+	}
 
 	@Override
 	// <!-- 01. insert_글 쓰기 -->
@@ -44,7 +51,8 @@ public class BoardServiceImpl implements BoardService {
 					log.info("BoardService-insertBoard 외래키 set dbUserVO.getUser_idx() {}", dbUserVO.getUser_idx());
 					boardVO.setUser_idx(dbUserVO.getUser_idx());
 					log.info("BoardService-insertBoard boardVO insert 시도 {}", boardVO);
-					boardDAO.insertBoard(boardVO);
+					int rs = boardDAO.insertBoard(boardVO);
+					// 삼항연산 
 					log.info("BoardService-insertBoard 글 쓰기 성공 insertBoardFlag = 1 리턴");
 					return insertBoardFlag = 1;
 				} catch (Exception e) {
@@ -129,7 +137,7 @@ public class BoardServiceImpl implements BoardService {
 		if (boardVO != null && user_id != null) {
 			log.info("BoardServiceImpl-deleteBoard boardVO 존재, user_id 존재 확인");
 			dbUserVO = userDAO.selectByUserId(user_id);
-			if(dbUserVO != null && boardVO.getUser_idx() == dbUserVO.getUser_idx()) {
+			if (dbUserVO != null && boardVO.getUser_idx() == dbUserVO.getUser_idx()) {
 				try {
 					log.info("BoardServiceImpl-deleteBoard 유효한 계정 확인, 원본 글 작성자와 삭제 희망자간 일치함 확인");
 					boardDAO.deleteBoard(boardVO.getBoard_idx());
@@ -152,7 +160,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	// 글 목록 가져오기
-	// 기 작성된 글이 없다면 List<BoardVO> 객체를 리턴함. 
+	// 기 작성된 글이 없다면 List<BoardVO> 객체를 리턴함.
 	public List<BoardVO> selectBoardList() {
 		log.info("BoardServiceImpl-selectBoardList 호출");
 		List<BoardVO> boardList = boardDAO.selectBoardList();
