@@ -9,7 +9,7 @@ import com.eseict.gondo.vo.BoardVO;
 @Service
 public interface BoardService {
 	// <!-- 01. insert_글 쓰기 -->
-	int insertBoard(BoardVO boardVO, String user_id);
+	int insertBoard(BoardVO boardVO);
 
 	// <!-- 02. select_글 1개 가져오기 -->
 	BoardVO selectByIdx(int board_idx);

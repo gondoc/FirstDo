@@ -14,6 +14,18 @@ div.container-head {
     border: 2px solid black;
     font-size: 20pt;
 }
+div.insert{
+    text-align: center;
+    margin: 15px;
+    padding: 15px;
+    border: 2px solid black;
+}
+
+td.info {
+    text-align: right;
+    margin: 15px;
+    padding: 15px;
+}
 
 div.container-body {
     text-align: center;
@@ -24,13 +36,21 @@ div.container-body {
 
 div.home-login {
     text-align: right;
-    margin: 1em;
+    margin: 15px;
+    padding: 15px;
     font-size: 12pt;
 }
 
 table#content {
     width: 90%;
     margin: auto;
+}
+
+td.title {
+    border: 1px solid gray;
+    background-color: silver;
+    padding: 5px;
+    text-align: center;
 }
 
 th {

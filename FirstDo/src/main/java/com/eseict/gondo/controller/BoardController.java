@@ -3,14 +3,11 @@ package com.eseict.gondo.controller;
 import com.eseict.gondo.dao.BoardDAO;
 import com.eseict.gondo.dao.UserDAO;
 import com.eseict.gondo.service.UserServiceImpl;
+import com.eseict.gondo.vo.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.eseict.gondo.service.BoardService;
 import com.eseict.gondo.service.UserService;
@@ -21,6 +18,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashMap;
+
 
 @Slf4j
 @RestController
@@ -30,44 +29,62 @@ public class BoardController {
     BoardService boardService;
 
     @Autowired
-    public void BoardController(BoardService boardService) {
+    public void BoardService(BoardService boardService) {
         this.boardService = boardService;
     }
 
     @Autowired
     private UserService userService;
 
+
+
+    @PostMapping(value = "/board")
+    public ResponseEntity<String> Board(@RequestBody BoardVO boardVO){
+        int insertCnt = 0;
+        log.info("BoardController-Board 호출 : BoardVO {} ", boardVO);
+        insertCnt = boardService.insertBoard(boardVO);
+        log.info("BoardController-Board insertCnt : {} ", insertCnt);
+        return insertCnt == 1 ? new ResponseEntity<String>("success", HttpStatus.OK) :
+                new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
     @ApiOperation(value = "글 작성", notes = "유효한 계정이어야 하며, user_idx가 외래키로 지정되어 있습니다.")
-    @PostMapping(value = "/insertBoard")
+    @PostMapping(value = "insertBoard")
     // 글 쓰기
     // 유효한 계정일 것.
-    public int insertBoard(@RequestBody(required = false) BoardVO boardVO, @RequestParam String user_id) {
-        log.info("BoardController-insertBoard 호출 : 현 로그인 계정 {}, 작성시도 게시물 {}", user_id, boardVO);
+    public ResponseEntity<Message> insertBoard(
+            @RequestBody(required = false) BoardVO boardVO
+    ) {
+        log.info("BoardController-insertBoard 호출 : 현 로그인 계정 {}, 작성시도 게시물 {}", boardVO);
         UserVO dbUserVO = null;
         int insertBoardFlag = 1; // 0 성공, 1 실패, 2 계정없음
-        if (boardVO != null && user_id != null) {
-            dbUserVO = userService.selectByUserId(user_id);
+        if (boardVO != null) {
             if (dbUserVO != null) {
                 try {
                     log.info("BoardController-insertBoard 유효한 dbUserVO 확인 {}", dbUserVO);
-                    boardService.insertBoard(boardVO, user_id);
+                    boardService.insertBoard(boardVO);
                     log.info("BoardController-insertBoard insertBoard 성공");
                     log.info("BoardController-insertBoard return flag 1");
-                    return insertBoardFlag = 0;
+                    HashMap<String, String> saveResult = new HashMap<>();
+                    return new ResponseEntity(saveResult, HttpStatus.OK);
                 } catch (Exception e) {
                     log.info("BoardController-insertBoard insertBoard 중 오류 발생");
                     log.info("BoardController-insertBoard return flag 1");
-                    return insertBoardFlag;
+                    HashMap<String, String> saveResult = new HashMap<>();
+                    return new ResponseEntity(saveResult, HttpStatus.OK);
                 }
             } else {
                 log.info("BoardController-insertBoard 유효하지 않은 계정");
                 log.info("BoardController-insertBoard return flag 2");
-                return insertBoardFlag = 2;
+                HashMap<String, String> saveResult = new HashMap<>();
+                return new ResponseEntity(saveResult, HttpStatus.OK);
             }
         } else {
             log.info("BoardController-insertBoard boardVO == null || user_id == null");
             log.info("BoardController-insertBoard return flag 1");
-            return insertBoardFlag;
+            HashMap<String, String> saveResult = new HashMap<>();
+            return new ResponseEntity(saveResult, HttpStatus.OK);
         }
     }
 

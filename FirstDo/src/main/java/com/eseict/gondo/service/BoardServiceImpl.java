@@ -36,15 +36,12 @@ public class BoardServiceImpl implements BoardService {
 	// user_id가 db 내 유효할 것.
 	// insert 중 boardVO에 user_idx 외래키 처리 할 것.
 	// flag 처리 할 것.
-	public int insertBoard(BoardVO boardVO, String user_id) {
+	public int insertBoard(BoardVO boardVO) {
 		log.info("BoardServiceImpl-insertBoard 호출 : boardVO {}", boardVO);
-		log.info("BoardServiceImpl-insertBoard 호출 : user_id {}", user_id);
 		UserVO dbUserVO = null;
 		int insertBoardFlag = 0; // 0 실패, 1 성공
 		// 작성 게시글 확인, 유저 아이디 확인
-		if (boardVO != null && user_id != null) {
-			log.info("BoardServiceImpl-insertBoard boardVO, user_id 존재 확인");
-			dbUserVO = userDAO.selectByUserId(user_id);
+		if (boardVO != null) {
 			if (dbUserVO != null) {
 				log.info("BoardServiceImpl-insertBoard dbUserVO 유효함 {}", dbUserVO);
 				try {
