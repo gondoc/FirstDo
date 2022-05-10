@@ -1,5 +1,7 @@
 package com.eseict.gondo.dao;
 
+import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -19,7 +21,10 @@ public interface BoardDAO {
 	
 	// <!-- 04. delete_삭제하기(글 삭제) -->
 	int deleteBoard(int board_idx);
-	
-	// <!-- 05. select_글 목록 가져오기 -->
-	List<BoardVO> selectBoardList();
+
+    // 	<!-- 05. select_글 목록 가져오기 -->
+	List<BoardVO> selectList(Connection connection, HashMap<String, Integer> map);
+
+	// <!-- 06. select_글 갯수 가져오기 -->
+	int selectCount();
 }

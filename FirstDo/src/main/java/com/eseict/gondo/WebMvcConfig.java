@@ -18,13 +18,12 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
+	
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.cors().disable()
 		.csrf().disable()
 		.formLogin().disable()
 		.headers().frameOptions().disable();
-		
 	}
 }

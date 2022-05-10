@@ -5,65 +5,52 @@
 <mapper namespace="com.eseict.gondo.dao.BoardDAO">
 
 	<!-- 01. insert_글 쓰기 -->
-	<insert
-		id="insertBoard"
-		parameterType="BoardVO"
-	>
-		insert into board (
+	<insert id="insertBoard" parameterType="BoardVO">
+		insert into
+		board (
 		board_subject,
 		board_content,
-		user_idx
+		board_regDate
 		)
 		values(
 		#{board_subject},
 		#{board_content},
-		#{user_idx}
+		#{board_regDate},
 		)
 	</insert>
 
 	<!-- 02. select_글 1개 가져오기(user_idx) -->
-	<select
-		id="selectByIdx"
-		parameterType="int"
-		resultType="BoardVO"
-	>
+	<select id="selectByIdx" parameterType="int" resultType="BoardVO">
 		select * from board where board_idx=#{board_idx}
 	</select>
 
-	<!-- 02. select_글 1개 가져오기(user_id) -->
-	<select
-		id="selectByUserId"
-		parameterType="String"
-		resultType="UserVO"
-	>
-		select * from user where user_id=#{user_id}
-	</select>
-
 	<!-- 03. update_글 수정하기 -->
-	<update
-		id="updateUser"
-		parameterType="int"
-	>
-		UPDATE user SET
-		user_pw = #{user_pw},
-		user_name = #{user_name }
+	<update id="updateBoard" parameterType="int">
+		UPDATE board SET
+		board_subject = #{board_subject},
+		board_content = #{board_content }
 		WHERE
-		user_id = #{user_id }
+		board_idx = #{board_idx}
 	</update>
 
-
 	<!-- 04. delete_글 삭제하기 -->
-	<delete
-		id="deleteBoard"
-		parameterType="int"
-	>
-		delete from board where board_idx=#{board_idx}
+	<delete id="deleteBoard" parameterType="int">
+		delete from board
+		where board_idx=#{board_idx}
+
 	</delete>
 
 	<!-- 05. select_글 목록 가져오기 -->
-	<select id="selectList">
-		select * from board
+	<select id="selectList" resultType="BoardVO" parameterType="HashMap">
+		select * from board order by board_idx desc limit startNo = #{startNo}, pageSize = #{pageSize}
 	</select>
+
+	<!-- 06. select_글 갯수 가져오기 -->
+	<select id="selectCount" resultType="int">
+		select count(*) from board
+	</select>
+
+
 
 </mapper>
 

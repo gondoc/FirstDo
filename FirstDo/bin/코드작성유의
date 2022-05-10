@@ -1,0 +1,16 @@
+1. 게시판 crud 작업
+
+2. pagination
+
+추후. 유저 crud
+
+추후. 유저 관련 기능 추가
+
+3. table user board
+외래키 user_idx
+
+4. insert, update, delete 
+flag를 써서 예외처리
+
+5. log.info("... {}", Object); 활용
+{}안에 Object가 들어가는 형태
