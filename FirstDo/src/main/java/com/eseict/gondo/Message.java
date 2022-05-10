@@ -1,5 +1,5 @@
 
-package com.eseict.gondo.vo;
+package com.eseict.gondo;
 
 import lombok.Data;
 

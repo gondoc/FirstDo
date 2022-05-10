@@ -1,9 +1,6 @@
 package com.eseict.gondo.controller;
 
-import com.eseict.gondo.dao.BoardDAO;
-import com.eseict.gondo.dao.UserDAO;
-import com.eseict.gondo.service.UserServiceImpl;
-import com.eseict.gondo.vo.Message;
+import com.eseict.gondo.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

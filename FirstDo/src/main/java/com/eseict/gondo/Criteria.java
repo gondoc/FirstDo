@@ -1,4 +1,4 @@
-package com.eseict.gondo.vo;
+package com.eseict.gondo;
 
 public class Criteria {
     private int pageNum;

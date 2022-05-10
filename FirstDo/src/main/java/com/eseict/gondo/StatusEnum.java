@@ -1,4 +1,4 @@
-package com.eseict.gondo.vo;
+package com.eseict.gondo;
 
 public enum StatusEnum {
 

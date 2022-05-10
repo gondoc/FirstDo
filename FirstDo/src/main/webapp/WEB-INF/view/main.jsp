@@ -1,18 +1,22 @@
-<!DOCTYPE html>
-<html xmlns xmlns:th="http://www.w3.org/1999/xhtml" : th="http://www.thymeleaf.org">
+<%@ page import="java.util.List" %>
+<%@ page import="com.eseict.gondo.vo.BoardVO" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.eseict.gondo.vo.PagingVO" %>
+<%@ include file="include.jsp"%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    request.setCharacterEncoding("utf-8");
+    List<BoardVO> boardList = (List<BoardVO>)request.getAttribute("boardList");
+//    PagingVO<BoardVO> list = (PagingVO<BoardVO>)request.getAttribute("pv");
+%>
+<html>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8;">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <title>main</title>
-    <script type="text/javascript">
-        const user_id = document.getElementById('user_id').querySelector.toString
 
-        function loginCheck() {
-            // 유효성 검사
-            alert(user_id);
-        }
-    </script>
 </head>
 
 <body>
@@ -20,13 +24,6 @@
     <div class="container-head">
         <h3>MainPage</h3>
     </div>
-    <div class="home-login">
-        <div id="login_1">
-            <input type="button" value="로그인하기" onclick="location.href='login'" style="width: 200px;"/>
-            <input type="button" value="loginTest" onclick="return loginCheck()" style="width: 200px;"/>
-        </div>
-    </div>
-
     <table id="content">
         <tr>
         </tr>
@@ -40,13 +37,24 @@
 
         <tbody class="boardList">
         <!-- CONTENTS !-->
-        <tr th:each="boardVO : ${boardList}">
-            <td th:text="${boardVO.board_idx}"></td>
-            <td><a th:href="'/board/view/'+${boardVO.board_idx}" th:text="${boardVO.board_subject}"></a></td>
-            <td th:text="${boardVO.board_regDate}"></td>
-        </tr>
+        <thead>
+
+        </thead>
+
+        <%=boardList%>
+
+
         </tbody>
+
+        <br>
+
     </table>
+
+    <div class="home-login">
+        <div id="login_1">
+            <input type="button" value="로그인하기" onclick="location.href='login'" style="width: 200px;"/>
+        </div>
+    </div>
     <input type="button" value="글 쓰기" onclick="location.href='insertBoard'" style="width: 200px; margin-right: 15px;"/>
 </div>
 <br>
@@ -69,7 +77,6 @@
     </div>
 </footer>
 </body>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath }/static/js/comm.js"></script>
 </html>

@@ -1,23 +1,22 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    request.setCharacterEncoding("utf-8");
+
+%>
 <!DOCTYPE html>
-<html  xmlns xmlns:th="http://www.w3.org/1999/xhtml" : th="http://www.thymeleaf.org">
+<html>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8;">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 
     <title>login</title>
-
-
-    <script>
-        function ajax() {
-
-        }
     </script>
 
     <script type="text/javascript">
         function formCheck() {
-            var id_value = document.getElementById('user_id');
-            var pw_value = document.getElementById('user_pw').querySelector.toString;
+            const id_value = document.getElementById('user_id');
+            const pw_value = document.getElementById('user_pw').querySelector.toString;
             alert("id_value : " + id_value);
             alert("pw_value : " + id_value);
             if (document.getElementById(user_id) == '') {

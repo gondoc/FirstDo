@@ -15,7 +15,9 @@
 게시글 수정하기
 게시글 삭제하기
 */
+select count(*) from board;
 
+select * from board
 
 select * from board order by board_idx desc 
 

@@ -1,5 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    request.setCharacterEncoding("utf-8");
+
+%>
 <!DOCTYPE html>
-<html xmlns xmlns:th="http://www.w3.org/1999/xhtml" : th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8;">
     <title>상세보기</title>
@@ -19,22 +24,14 @@
     </div>
 
     <form id="insert-form" method="post">
-        <div class="container-user">
-            <div class="insert">
-                제목
-            </div>
-            <input type="text" id="board_subject" width="300px" value="${board_subject}" readonly>
-            <br>
-            <br/>
-            <div class="insert">
-                본문
-            </div>
-            <textarea id="board_content" rows="5" cols="30" readonly></textarea>
-            <br/>
-            <input type="submit" value="글 등록하기" style="width: 300px; margin: 2px;"/>
-        </div>
+        <div class="container-board">
+           <%
 
-        <br>
+
+           %>
+        </div>
+        <input type="button" value="수정하기" style="width: 300px; margin: 2px;"/>
+        <input type="button" value="삭제하기" style="width: 300px; margin: 2px;"/>
     </form>
 
 </div>
@@ -66,7 +63,7 @@
 
             console.log(insert);
             $.ajax({
-                cache : false,
+                cache: false,
                 type: "POST",
                 url: "/board/board",
                 data: insert,

@@ -1,5 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    request.setCharacterEncoding("utf-8");
+
+%>
 <!DOCTYPE html>
-<html xmlns xmlns:th="http://www.w3.org/1999/xhtml" : th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8;">
     <title>글 쓰기</title>
@@ -17,10 +22,25 @@
             <input type="button" value="메인으로" onclick="location.href='/'" style="width: 200px;"/>
         </div>
     </div>
-    <button type="button"
-            onclick='SendPost("${pageContext.request.contextPath }/qna/qnaInsertForm",{"p":${pv.currentPage },"s":${pv.pageSize },"b":${pv.blockSize }},"post")'>
-        글쓰기
-    </button>
+
+    <form id="insert-form" method="post">
+        <div class="container-user">
+            <div class="insert">
+                제목
+            </div>
+            <input type="text" id="board_subject" width="300px" placeholder="글의 제목입니다." required> <br>
+            <br/>
+            <div class="insert">
+                본문
+            </div>
+            <textarea id="board_content" rows="5" cols="30" placeholder="글의 본문입니다." required></textarea>
+            <br/>
+            <input type="submit" value="글 등록하기" style="width: 300px; margin: 2px;"/>
+        </div>
+
+        <br>
+    </form>
+
 </div>
 <br>
 <footer>
@@ -45,15 +65,15 @@
 <script>
 
     $(function () {
-        $('#insertsubmit').on("click", function () {
+        $('#insert-submit').on("click", function () {
+            const insert = $("#insert-form").serialize();
 
-            var form1 = $("#form").serialize();
-
-            console.log(form1);
+            console.log(insert);
             $.ajax({
-                type: "post",
-                url: "/login/check",
-                data: form1,
+                cache : false,
+                type: "POST",
+                url: "/board/board",
+                data: insert,
                 dataType: 'json',
                 success: function (data) {
                     alert("success");

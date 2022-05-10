@@ -1,12 +1,12 @@
 package com.eseict.gondo.controller;
 
-import java.net.URI;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
+import com.eseict.gondo.JDBCUtil;
+import com.eseict.gondo.vo.PagingVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +19,7 @@ import com.eseict.gondo.vo.BoardVO;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 @Slf4j
@@ -32,11 +33,19 @@ public class MainController {
 
 
     @GetMapping(value = "/")
-    public String main(Model model) {
+    public String main(HttpServletRequest request, Model model) {
         log.info("MainController-main 호출");
-        List<BoardVO> boardList = boardService.selectBoardList();
-        model.addAttribute("boardList", boardList);
-        log.info("MainController-selectBoardList boardList {} : ", boardList);
+        int currentPage = 1;
+        int pageSize = 10;
+        int blockSize = 10;
+        PagingVO<BoardVO> pagingVO = null;
+        try {
+            pagingVO = boardService.selectList(currentPage, pageSize, blockSize);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        request.setAttribute("pv", pagingVO);
+        log.info("MainController-selectBoardList boardList {} : ", pagingVO);
         return "main";
     }
 
@@ -50,20 +59,15 @@ public class MainController {
     }
 
 
-    @RequestMapping(value = "board/view/{board_idx}", method = RequestMethod.GET)
-    public String viewBoard(HttpServletRequest req, Model model, @PathVariable int board_idx) {
-        log.info("MainController-viewBoard 호출 : HttpServletRequest req {}, board_idx {} ", req, board_idx);
+    @RequestMapping(value = "board/view", method = RequestMethod.GET)
+    public String viewBoard(Model model, int board_idx) {
+        log.info("MainController-viewBoard 호출 : board_idx {} ", board_idx);
         BoardVO dbBoardVO = null;
-//        int board_idx = 0;
-        if(req != null){
-//            board_idx = Integer.parseInt(req.getParameter("board_idx"));
-            log.info("MainController-viewBoard board_idx {} ", board_idx);
-            dbBoardVO = boardService.selectByIdx(board_idx);
-            log.info("MainController-viewBoard dbBoardVO {} ", dbBoardVO);
-            model.addAttribute("boardVO", dbBoardVO);
-            log.info("MainController-viewBoard boardVO key : dbBoardVO value // boardVO {} ", dbBoardVO);
-            log.info("MainController-viewBoard viewBoard.jsp 이동");
-        }
+        dbBoardVO = boardService.selectByIdx(board_idx);
+        log.info("MainController-viewBoard dbBoardVO {} ", dbBoardVO);
+        model.addAttribute("view", dbBoardVO);
+        log.info("MainController-viewBoard view key : dbBoardVO value // view {} ", dbBoardVO);
+        log.info("MainController-viewBoard viewBoard.jsp 이동");
         return "viewBoard";
     }
 

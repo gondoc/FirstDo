@@ -14,20 +14,15 @@ div.container-head {
     border: 2px solid black;
     font-size: 20pt;
 }
-div.insert{
+
+div.container-body {
     text-align: center;
     margin: 15px;
     padding: 15px;
     border: 2px solid black;
 }
 
-td.info {
-    text-align: right;
-    margin: 15px;
-    padding: 15px;
-}
-
-div.container-body {
+div.container-board {
     text-align: center;
     margin: 15px;
     padding: 15px;
@@ -40,6 +35,20 @@ div.home-login {
     padding: 15px;
     font-size: 12pt;
 }
+
+div.insert {
+    text-align: center;
+    margin: 15px;
+    padding: 15px;
+    border: 2px solid black;
+}
+
+td.info {
+    text-align: right;
+    margin: 15px;
+    padding: 15px;
+}
+
 
 table#content {
     width: 90%;
