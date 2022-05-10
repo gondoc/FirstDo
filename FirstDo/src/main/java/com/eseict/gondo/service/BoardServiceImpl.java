@@ -2,7 +2,6 @@ package com.eseict.gondo.service;
 
 import com.eseict.gondo.JDBCUtil;
 import com.eseict.gondo.vo.PagingVO;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import com.eseict.gondo.dao.BoardDAO;
@@ -12,8 +11,6 @@ import com.eseict.gondo.vo.UserVO;
 
 import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -164,6 +161,12 @@ public class BoardServiceImpl implements BoardService {
     public int selectCount() {
         int totalCount = boardDAO.selectCount();
         return totalCount;
+    }
+
+    @Override
+    public List<BoardVO> selectBoardList() {
+        List<BoardVO> list = boardDAO.selectBoardList();
+        return list;
     }
 
     @Override

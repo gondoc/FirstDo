@@ -1,10 +1,8 @@
 package com.eseict.gondo.controller;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 
-import com.eseict.gondo.JDBCUtil;
 import com.eseict.gondo.vo.PagingVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +17,6 @@ import com.eseict.gondo.vo.BoardVO;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 
 @Slf4j
@@ -35,17 +32,9 @@ public class MainController {
     @GetMapping(value = "/")
     public String main(HttpServletRequest request, Model model) {
         log.info("MainController-main 호출");
-        int currentPage = 1;
-        int pageSize = 10;
-        int blockSize = 10;
-        PagingVO<BoardVO> pagingVO = null;
-        try {
-            pagingVO = boardService.selectList(currentPage, pageSize, blockSize);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        request.setAttribute("pv", pagingVO);
-        log.info("MainController-selectBoardList boardList {} : ", pagingVO);
+        List<BoardVO> boardList = boardService.selectBoardList();
+        request.setAttribute("boardList", boardList);
+        log.info("MainController-main boardList {} : ", boardList);
         return "main";
     }
 

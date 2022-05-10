@@ -12,6 +12,5 @@ public class Message {
     public Message() {
         this.status = StatusEnum.BAD_REQUEST;
         this.data = null;
-        this.message = null;
-    }
+        this.message = null;    }
 }

@@ -30,4 +30,5 @@ public interface BoardService {
 	int selectCount();
 
 
+    List<BoardVO> selectBoardList();
 }

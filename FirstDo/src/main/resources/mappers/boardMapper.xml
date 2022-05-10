@@ -50,6 +50,11 @@
 		select count(*) from board
 	</select>
 
+	<!-- 06. select_글 갯수 가져오기 -->
+	<select id="selectBoardList" resultType="BoardVO">
+		select * from board
+	</select>
+
 
 
 </mapper>

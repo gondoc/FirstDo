@@ -27,4 +27,6 @@ public interface BoardDAO {
 
 	// <!-- 06. select_글 갯수 가져오기 -->
 	int selectCount();
+
+	List<BoardVO> selectBoardList();
 }
