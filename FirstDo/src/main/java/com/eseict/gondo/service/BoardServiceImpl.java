@@ -43,36 +43,28 @@ public class BoardServiceImpl implements BoardService {
     // flag 처리 할 것.
     public int insertBoard(BoardVO boardVO) {
         log.info("BoardServiceImpl-insertBoard 호출 : boardVO {}", boardVO);
-        UserVO dbUserVO = null;
         int insertBoardFlag = 0; // 0 실패, 1 성공
         // 작성 게시글 확인, 유저 아이디 확인
         if (boardVO != null) {
-            if (dbUserVO != null) {
-                log.info("BoardServiceImpl-insertBoard dbUserVO 유효함 {}", dbUserVO);
-                try {
-                    log.info("BoardService-insertBoard 외래키 set dbUserVO.getUser_idx() {}", dbUserVO.getUser_idx());
-                    boardVO.setUser_idx(dbUserVO.getUser_idx());
-                    log.info("BoardService-insertBoard boardVO insert 시도 {}", boardVO);
-                    int rs = boardDAO.insertBoard(boardVO);
-                    // 삼항연산
-                    log.info("BoardService-insertBoard 글 쓰기 성공 insertBoardFlag = 1 리턴");
-                    return insertBoardFlag = 1;
-                } catch (Exception e) {
-                    log.info("BoardServiceImpl-insertBoard insertBoard 실행중 오류발생");
-                    log.info("BoardServiceImpl-insertBoard insertBoard insertBoardFlag = 0 리턴");
-                    e.printStackTrace();
-                    return insertBoardFlag;
-                }
-            } else {
-                log.info("BoardServiceImpl-insertBoard dbUserVO null 유저가 유효하지 않음");
+            try {
+                log.info("BoardService-insertBoard boardVO insert 시도 {}", boardVO);
+                int rs = boardDAO.insertBoard(boardVO);
+                log.info("BoardService-insertBoard boardVO rs {}", rs);
+                // 삼항연산
+                log.info("BoardService-insertBoard 글 쓰기 성공 insertBoardFlag = 1 리턴");
+                return insertBoardFlag = 1;
+            } catch (Exception e) {
+                log.info("BoardServiceImpl-insertBoard insertBoard 실행중 오류발생");
                 log.info("BoardServiceImpl-insertBoard insertBoard insertBoardFlag = 0 리턴");
+                e.printStackTrace();
                 return insertBoardFlag;
             }
         } else {
-            log.info("BoardServiceImpl-insertBoard boardVO, user_id 미존재");
+            log.info("BoardServiceImpl-insertBoard dbUserVO null 유저가 유효하지 않음");
             log.info("BoardServiceImpl-insertBoard insertBoard insertBoardFlag = 0 리턴");
             return insertBoardFlag;
         }
+
     }
 
     @Override
@@ -167,18 +159,22 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public List<BoardVO> selectBoardList() {
+        List<BoardVO> list = boardDAO.selectBoardList();
+        return list;
+    }
+
+    @Override
     public PagingVO<BoardVO> selectList(int currentPage, int pageSize, int blockSize) throws SQLException {
         log.info("BoardServiceImpl-selectList 호출 : currentPage {}, pageSize {}, blockSize {} ", currentPage, pageSize, blockSize);
-        Connection connection = null;
-        connection = JDBCUtil.getConnection();
-        log.info("BoardServiceImpl-selectList : Connection {} ", connection);
-        connection.setAutoCommit(false);
         int totalCount = boardDAO.selectCount();
         PagingVO<BoardVO> pagingVO = new PagingVO<BoardVO>(totalCount, currentPage, pageSize, blockSize);
+
         HashMap<String, Integer> map = new HashMap<String, Integer>();
         map.put("startNo", pagingVO.getStartNo());
         map.put("pageSize", pagingVO.getPageSize());
-        List<BoardVO> boardList = boardDAO.selectList(connection, map);
+
+        List<BoardVO> boardList = boardDAO.selectList(map);
         log.info("BoardServiceImpl-selectBoardList : boardList {} ", boardList);
         pagingVO.setList(boardList);
         log.info("BoardServiceImpl-selectBoardList : pagingVO {} ", pagingVO);

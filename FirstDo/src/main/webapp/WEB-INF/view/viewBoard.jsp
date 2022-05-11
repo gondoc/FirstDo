@@ -1,7 +1,8 @@
+<%@ page import="com.eseict.gondo.vo.BoardVO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
     request.setCharacterEncoding("utf-8");
-
+    BoardVO vo = (BoardVO) request.getAttribute("view");
 %>
 <!DOCTYPE html>
 <html>
@@ -27,6 +28,11 @@
         <div class="container-board">
            <%
 
+                        // 여기에는 내용을 찍자
+                        String content = vo.getBoard_content();
+                        content = content.replaceAll("<", "&lt"); // 태그 무시
+                        content = content.replaceAll("\n", "<br>");
+                        out.println(content);
 
            %>
         </div>
@@ -56,17 +62,16 @@
 </footer>
 </body>
 <script>
-
     $(function () {
-        $('#insert-submit').on("click", function () {
-            const insert = $("#insert-form").serialize();
+        $('#delete-submit').on("click", function () {
+            const delete = $("#delete-form").serialize();
 
-            console.log(insert);
+            console.log(delete);
             $.ajax({
                 cache: false,
                 type: "POST",
-                url: "/board/board",
-                data: insert,
+                url: "/board/delete",
+                data: delete,
                 dataType: 'json',
                 success: function (data) {
                     alert("success");
@@ -79,6 +84,31 @@
             });
         });
     });
+
+
+    $(function () {
+        $('#update-submit').on("click", function () {
+            const update = $("#update-form").serialize();
+
+            console.log(update);
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "/board/board",
+                data: update,
+                dataType: 'json',
+                success: function (data) {
+                    alert("success");
+                    console.log(data);
+                },
+                error: function (request, status, error) {
+                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+                }
+            });
+        });
+    });
+
 
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

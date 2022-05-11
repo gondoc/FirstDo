@@ -8,9 +8,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8;">
     <title>글 쓰기</title>
-    <script type="text/javascript">
-
-    </script>
 </head>
 <body>
 <div id="wrapper">
@@ -23,22 +20,14 @@
         </div>
     </div>
 
-    <form id="insert-form" method="post">
-        <div class="container-user">
-            <div class="insert">
-                제목
-            </div>
-            <input type="text" id="board_subject" width="300px" placeholder="글의 제목입니다." required> <br>
-            <br/>
-            <div class="insert">
-                본문
-            </div>
-            <textarea id="board_content" rows="5" cols="30" placeholder="글의 본문입니다." required></textarea>
-            <br/>
-            <input type="submit" value="글 등록하기" style="width: 300px; margin: 2px;"/>
-        </div>
-
-        <br>
+    <form id="insert-form" >
+        <label>제목</label>
+        <input name="board_subject" type="text" id="board_subject" width="300px" placeholder="글의 제목입니다." required> <br>
+        <br/>
+        <label>본문</label>
+        <textarea name="board_content" id="board_content" rows="5" cols="30" placeholder="글의 본문입니다." required></textarea>
+        <br/>
+        <input type="button" id="insert-submit" value="글 등록하기" style="width: 300px; height: 80px; margin: 2px;"/>
     </form>
 
 </div>
@@ -61,19 +50,24 @@
         </table>
     </div>
 </footer>
-</body>
-<script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath }/js/comm.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<script type="text/javascript">
     $(function () {
         $('#insert-submit').on("click", function () {
             const insert = $("#insert-form").serialize();
-
             console.log(insert);
             $.ajax({
-                cache : false,
-                type: "POST",
-                url: "/board/board",
-                data: insert,
+                cache: false,
+                type: "post",
+                url: "/board/insertBoard",
+                data : insert,
                 dataType: 'json',
                 success: function (data) {
                     alert("success");
@@ -86,9 +80,6 @@
             });
         });
     });
-
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath }/static/js/comm.js"></script>
-<link rel="stylesheet" type="text/css" href="/css/style.css">
+</body>
 </html>

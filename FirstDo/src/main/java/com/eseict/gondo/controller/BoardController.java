@@ -34,11 +34,17 @@ public class BoardController {
     private UserService userService;
 
 
-
     @PostMapping(value = "/board")
-    public ResponseEntity<String> Board(@RequestBody BoardVO boardVO){
+    public ResponseEntity<String> Board(
+            @RequestParam String board_subject,
+            @RequestParam String board_content) {
+        log.info("BoardController-Board 호출 : board_subject {} ", board_subject);
+        log.info("BoardController-Board 호출 : board_content {} ", board_content);
         int insertCnt = 0;
-        log.info("BoardController-Board 호출 : BoardVO {} ", boardVO);
+        BoardVO boardVO = new BoardVO();
+        boardVO.setBoard_subject(board_subject);
+        boardVO.setBoard_content(board_content);
+        log.info("BoardController-Board : BoardVO {} ", boardVO);
         insertCnt = boardService.insertBoard(boardVO);
         log.info("BoardController-Board insertCnt : {} ", insertCnt);
         return insertCnt == 1 ? new ResponseEntity<String>("success", HttpStatus.OK) :
@@ -46,34 +52,21 @@ public class BoardController {
     }
 
 
-    @ApiOperation(value = "글 작성", notes = "유효한 계정이어야 하며, user_idx가 외래키로 지정되어 있습니다.")
     @PostMapping(value = "insertBoard")
     // 글 쓰기
-    // 유효한 계정일 것.
     public ResponseEntity<Message> insertBoard(
-            @RequestBody(required = false) BoardVO boardVO
-    ) {
-        log.info("BoardController-insertBoard 호출 : 현 로그인 계정 {}, 작성시도 게시물 {}", boardVO);
-        UserVO dbUserVO = null;
-        int insertBoardFlag = 1; // 0 성공, 1 실패, 2 계정없음
+            BoardVO boardVO) {
+        log.info("BoardController-insertBoard 호출 : 작성시도 게시물 {}", boardVO);
         if (boardVO != null) {
-            if (dbUserVO != null) {
-                try {
-                    log.info("BoardController-insertBoard 유효한 dbUserVO 확인 {}", dbUserVO);
-                    boardService.insertBoard(boardVO);
-                    log.info("BoardController-insertBoard insertBoard 성공");
-                    log.info("BoardController-insertBoard return flag 1");
-                    HashMap<String, String> saveResult = new HashMap<>();
-                    return new ResponseEntity(saveResult, HttpStatus.OK);
-                } catch (Exception e) {
-                    log.info("BoardController-insertBoard insertBoard 중 오류 발생");
-                    log.info("BoardController-insertBoard return flag 1");
-                    HashMap<String, String> saveResult = new HashMap<>();
-                    return new ResponseEntity(saveResult, HttpStatus.OK);
-                }
-            } else {
-                log.info("BoardController-insertBoard 유효하지 않은 계정");
-                log.info("BoardController-insertBoard return flag 2");
+            try {
+                boardService.insertBoard(boardVO);
+                log.info("BoardController-insertBoard insertBoard 성공");
+                log.info("BoardController-insertBoard return flag 1");
+                HashMap<String, String> saveResult = new HashMap<>();
+                return new ResponseEntity(saveResult, HttpStatus.OK);
+            } catch (Exception e) {
+                log.info("BoardController-insertBoard insertBoard 중 오류 발생");
+                log.info("BoardController-insertBoard return flag 1");
                 HashMap<String, String> saveResult = new HashMap<>();
                 return new ResponseEntity(saveResult, HttpStatus.OK);
             }
@@ -107,12 +100,12 @@ public class BoardController {
     // 유효한 계정일 것.
     // 글이 존재할 것.
     // 원본 글 작성자와 수정 희망자가 일치할 것.
-    public int updateBoard(@RequestBody BoardVO boardVO, @RequestHeader String user_id) throws JsonMappingException {
-        log.info("BoardController-updateBoard 호출 : 현 로그인 계정 {}, 수정희망 게시물 {}", user_id, boardVO);
+    public int updateBoard(@RequestBody BoardVO boardVO) throws JsonMappingException {
+        log.info("BoardController-updateBoard 호출 : 수정희망 게시물 {}", boardVO);
         UserVO dbUserVO = null;
         BoardVO dbBoardVO = null;
-        int updateBoardFlag = 0; // 0 실패, 1 성공, 2 수정 전 게시글없음, 3 유효하지않은 계정, 4 계정 불일치
-        if (boardVO != null && user_id != null) {
+        int updateBoardFlag = 0; // 0 실패, 1 성공, 2 수정 전 게시글없음
+        if (boardVO != null) {
             log.info("BoardController-updateBoard boardVO && user_id not null");
             dbBoardVO = boardService.selectByIdx(boardVO.getBoard_idx());
             log.info("BoardController-updateBoard 수정 전 게시물 dbBoardVO 확인 {}", dbBoardVO);
@@ -120,26 +113,10 @@ public class BoardController {
                 log.info("BoardController-updateBoard dbBoardVO null updateBoardFlag = 2");
                 return updateBoardFlag = 2;
             }
-            dbUserVO = userService.selectByUserId(user_id);
-            log.info("BoardController-updateBoard 계정 정보 dbUserVO 확인 {}", dbUserVO);
-            if (dbUserVO == null) {
-                log.info("BoardController-updateBoard dbUserVO null updateBoardFlag = 3");
-                return updateBoardFlag = 3;
-            }
-            if (boardVO.getUser_idx() != dbUserVO.getUser_idx()) {
-                log.info("BoardController-updateBoard 원본 글 작성자와 작성 글 삭제 요청자 불일치 updateBoardFlag = 4");
-                return updateBoardFlag = 4;
-            } else {
-                log.info("BoardController-updateBoard 원본 글 작성자와 작성 글 삭제 요청자 일치 updateBoardFlag = 1");
-                boardService.updateBoard(boardVO, user_id);
-                log.info("BoardController-updateBoard 수정 성공 Flag 1");
-                return updateBoardFlag = 1;
-            }
-        } else {
-            log.info("BoardController-updateBoard 오류 발생 updateBoardFlag = 0 ");
-            return updateBoardFlag;
         }
+        return updateBoardFlag;
     }
+
 
     @ApiOperation(value = "글 삭제", notes = "원본 글 작성자와 삭제 희망자가 일치해야 정상 동작합니다.")
     @PostMapping(value = "/deleteBoard")

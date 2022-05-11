@@ -9,13 +9,11 @@
 		insert into
 		board (
 		board_subject,
-		board_content,
-		board_regDate
+		board_content
 		)
 		values(
 		#{board_subject},
-		#{board_content},
-		#{board_regDate},
+		#{board_content}
 		)
 	</insert>
 
@@ -42,7 +40,7 @@
 
 	<!-- 05. select_글 목록 가져오기 -->
 	<select id="selectList" resultType="BoardVO" parameterType="HashMap">
-		select * from board order by board_idx desc limit startNo = #{startNo}, pageSize = #{pageSize}
+		select * from board order by board_idx desc limit #{startNo}, #{pageSize}
 	</select>
 
 	<!-- 06. select_글 갯수 가져오기 -->
@@ -50,7 +48,9 @@
 		select count(*) from board
 	</select>
 
-
+	<select id="selectBoardList" resultType="BoardVO">
+		select * from board order by board_idx desc
+	</select>
 
 </mapper>
 

@@ -86,3 +86,13 @@ footer {
     padding: 10px;
     font-size: 10pt;
 }
+
+.title {
+    border: none;
+    text-align: center;
+}
+
+.sub_title {
+    border: none;
+    text-align: right;
+}

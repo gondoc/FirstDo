@@ -25,27 +25,32 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 @Controller
 public class MainController {
+
     @Autowired
     private BoardService boardService;
 
-    @Autowired
-    private UserService userService;
+//    @Autowired
+//    private UserService userService;
 
 
-    @GetMapping(value = "/")
-    public String main(HttpServletRequest request, Model model) {
+    @RequestMapping(value = "/")
+    public String main(HttpServletRequest request) {
         log.info("MainController-main 호출");
         int currentPage = 1;
         int pageSize = 10;
         int blockSize = 10;
+
+//        List<BoardVO> boardList = boardService.selectBoardList();
+//        request.setAttribute("boardList", boardList);
         PagingVO<BoardVO> pagingVO = null;
         try {
             pagingVO = boardService.selectList(currentPage, pageSize, blockSize);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         request.setAttribute("pv", pagingVO);
-        log.info("MainController-selectBoardList boardList {} : ", pagingVO);
+//        log.info("MainController-selectBoardList boardList {} : ", boardList);
         return "main";
     }
 
@@ -60,7 +65,8 @@ public class MainController {
 
 
     @RequestMapping(value = "board/view", method = RequestMethod.GET)
-    public String viewBoard(Model model, int board_idx) {
+    public String viewBoard(
+            @RequestParam("idx") int board_idx, Model model) {
         log.info("MainController-viewBoard 호출 : board_idx {} ", board_idx);
         BoardVO dbBoardVO = null;
         dbBoardVO = boardService.selectByIdx(board_idx);

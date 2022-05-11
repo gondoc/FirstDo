@@ -20,7 +20,7 @@ public class PagingVO<T> {
     private List<T> list;
 
     // 4개는 생성자로 넘겨받자
-    public PagingVO(int currentPage, int pageSize, int blockSize, int totalCount) {
+    public PagingVO(int totalCount, int currentPage, int pageSize, int blockSize) {
         super();
         this.currentPage = currentPage;
         this.pageSize = pageSize;
@@ -110,7 +110,7 @@ public class PagingVO<T> {
     public String toString() {
         return "PagingVO [currentPage=" + currentPage + ", pageSize=" + pageSize + ", blockSize=" + blockSize
                 + ", totalCount=" + totalCount + ", totalPage=" + totalPage + ", startNo=" + startNo + ", endNo="
-                + endNo + ", startPage=" + startPage + ", endPage=" + endPage + "]";
+                + endNo + ", startPage=" + startPage + ", endPage=" + endPage + ", list=" + list + "]";
     }
 
     // 2개의 메서드를 추가하자
@@ -120,7 +120,6 @@ public class PagingVO<T> {
         if(totalCount>0) result += "(" + currentPage + "/" + totalPage + "Page)";
         return result;
     }
-    // 페이지 하단에 표시할 메서드를 추가하자!!!
     public String getPageList() {
 		/*
 		<nav aria-label='Page navigation example'>
@@ -142,7 +141,7 @@ public class PagingVO<T> {
 		</nav>
 		 */
         StringBuffer sb = new StringBuffer();
-        //sb.append("<nav aria-label='Page navigation example'>");
+//        sb.append("<nav aria-label='Page navigation example'>");
         sb.append("<ul class='pagination pagination-sm justify-content-center'>");
         // "이전"은 시작페이지 번호가 1보다 크다면 있다.
         if(startPage>1) {
@@ -169,7 +168,7 @@ public class PagingVO<T> {
             sb.append("</li>");
         }
         sb.append("</ul>");
-        //sb.append("</nav>");
+//        sb.append("</nav>");
 
         return sb.toString();
     }
