@@ -31,7 +31,7 @@
     </div>
     <form id="board-form">
         <div>
-            <input type="hidden" name="board_idx" value="<%=vo.getBoard_idx()%>">
+            <input type="hidden" name="board_idx" id="board_idx" value="<%=vo.getBoard_idx()%>">
         </div>
         <div class="container-body">
             <label>글 제목</label><br>
@@ -120,29 +120,29 @@
                     }
                 });
             });
-            $('#delete-do').on("click", function () {
-                if (confirm("삭제하시겠습니까?") == true) {
-                    const delete = $("#board-form").serialize();
-                    console.log(delete);
-                    $.ajax({
-                        cache: false,
-                        type: "POST",
-                        url: "/board/deleteBoard",
-                        data: delete,
-                        dataType: 'text',
-                        success: function (data) {
-                            alert("delete success");
-                            window.location.href = "/"
-                            console.log(data);
-                        },
-                        error: function (request, status, error) {
-                            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-                        }
-                    });
-                } else {
-                    return;
-                }
-            });
+        });
+        $("#delete-do").on("click", function () {
+            if (confirm("삭제하시겠습니까?") == true) {
+                const del = $("#board-form").serialize();
+                console.log(del);
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: "/board/deleteBoard",
+                    data: del,
+                    dataType: 'text',
+                    success: function (data) {
+                        alert("delete success");
+                        window.location.href = "/"
+                        console.log(data);
+                    },
+                    error: function (request, status, error) {
+                        console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    }
+                });
+            } else {
+                return;
+            }
         });
     });
 </script>
