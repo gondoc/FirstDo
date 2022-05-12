@@ -91,15 +91,7 @@ public class BoardServiceImpl implements BoardService {
         log.info("BoardServiceImpl-updateBoard 호출 : boardVO {} ", boardVO);
         int rs = 0;
         if (boardVO != null) {
-            try {
-                rs = boardDAO.updateBoard(boardVO);
-                log.info("BoardServiceImpl-updateBoard rs {} ", rs);
-                return rs;
-            } catch (Exception e) {
-                log.info("BoardServiceImpl-updateBoard update 중 오류 발생");
-                log.info("BoardServiceImpl-insertUser insertBoard insertBoardFlag = 1 리턴");
-                return rs;
-            }
+            rs = boardDAO.updateBoard(boardVO);
         }
         return rs;
     }
@@ -112,18 +104,19 @@ public class BoardServiceImpl implements BoardService {
     public int deleteBoard(BoardVO boardVO) {
         log.info("BoardServiceImpl-deleteBoard 호출 : boardVO {}", boardVO);
         BoardVO dbBoardVO = null;
-        int rs = 0;
+        int deleteCnt = 1;
         if (boardVO != null) {
             log.info("BoardServiceImpl-deleteBoard boardVO 존재, user_id 존재 확인");
             try {
                 log.info("BoardServiceImpl-deleteBoard 삭제 쿼리 실행");
-                boardDAO.deleteBoard(boardVO.getBoard_idx());
+                deleteCnt = boardDAO.deleteBoard(boardVO.getBoard_idx());
+                return deleteCnt;
             } catch (Exception e) {
                 log.info("BoardServiceImpl-deleteBoard deleteBoard 실행중 오류 확인");
-                return rs;
+                return deleteCnt;
             }
         }
-        return rs;
+        return deleteCnt;
     }
 
     @Override

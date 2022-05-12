@@ -20,7 +20,7 @@
     </select>
 
     <!-- 03. update_글 수정하기 -->
-    <update id="updateBoard" parameterType="int">
+    <update id="updateBoard" parameterType="BoardVO">
         UPDATE board
         SET board_subject = #{board_subject},
             board_content = #{board_content}

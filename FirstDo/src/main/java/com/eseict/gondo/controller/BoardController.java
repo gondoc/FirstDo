@@ -91,17 +91,24 @@ public class BoardController {
     @PostMapping(value = "/updateBoard")
     // 글 수정하기
     // 글이 존재할 것.
-    public ResponseEntity<Message> updateBoard(BoardVO boardVO) throws JsonMappingException {
+    public ResponseEntity<String> updateBoard(BoardVO boardVO) throws JsonMappingException {
         log.info("BoardController-updateBoard 호출 : 수정희망 게시물 {}", boardVO);
         HashMap<String, String> saveResult = new HashMap<>();
+        Message msg = new Message();
         BoardVO dbBoardVO = null;
+        int updateCnt = 0;
         if (boardVO != null) {
             try {
-                boardService.updateBoard(boardVO);
-                return new ResponseEntity(saveResult, HttpStatus.OK);
-
+                updateCnt = boardService.updateBoard(boardVO);
+//                return new ResponseEntity(saveResult, HttpStatus.OK);
+                log.info("BoardController-updateBoard 호출 : updateCnt {}", updateCnt);
+                saveResult.put("updateCnt", "updateCnt");
+                return updateCnt == 1 ? new ResponseEntity<String>("success", HttpStatus.OK) :
+                        new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
             } catch (Exception e) {
-                log.info("BoardController-insertBoard updateBoard 중 오류 발생");
+//                log.info("BoardController-insertBoard updateBoard 중 오류 발생");
+//                msg.setMessage("오류발생");
+//                saveResult.put(boardVO, msg);
                 return new ResponseEntity(saveResult, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
@@ -112,14 +119,12 @@ public class BoardController {
     @ApiOperation(value = "글 삭제", notes = "원본 글 작성자와 삭제 희망자가 일치해야 정상 동작합니다.")
     @PostMapping(value = "/deleteBoard")
     // 글 삭제하기
-    // 유효한 계정일 것.
     // 글이 존재할 것.
-    // 원본 글 작성자와 작성 글 삭제 요청자가 일치할 것.
-    public ResponseEntity<Message> deleteBoard(BoardVO boardVO) throws JsonMappingException {
+    public ResponseEntity<String> deleteBoard(BoardVO boardVO) throws JsonMappingException {
         log.info("BoardController-deleteBoard 호출 삭제 희망 게시물 {}", boardVO);
         HashMap<String, String> saveResult = new HashMap<>();
         BoardVO dbBoardVO = null;
-        int deleteBoardFlag = 0; // 0 실패, 1 성공, 2 삭제 전 게시물 없음, 3 유효하지 않은 계정, 4 불일치
+        int deleteCnt = 0;
         if (boardVO == null) {
             log.info("BoardController-deleteBoard 오류 발생 boardVO null 값 넘어옴");
             return new ResponseEntity(saveResult, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -130,7 +135,8 @@ public class BoardController {
             return new ResponseEntity(saveResult, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         log.info("BoardController-deleteBoard 삭제쿼리 실행");
-        boardService.deleteBoard(boardVO);
-        return new ResponseEntity(saveResult, HttpStatus.OK);
+        deleteCnt = boardService.deleteBoard(boardVO);
+        return deleteCnt > 0 ? new ResponseEntity<String>("success", HttpStatus.OK) :
+                new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

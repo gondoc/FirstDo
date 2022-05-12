@@ -96,19 +96,17 @@
             $(function () {
                 $("#update-submit").on("click", function () {
                     const update = $("#update-form").serialize();
-                    alert(update);
-
                     if (confirm("작성한 내용으로 수정하시겠습니까?") == true) {
                         $.ajax({
                             cache: false,
                             type: "POST",
                             url: "/board/updateBoard",
                             data: update,
-                            dataType: 'json',
+                            dataType: 'text',
                             success: function (data) {
                                 alert("update success");
-                                window.location.href = "/board/view?${board_idx}"
-                                console.log(data);
+                                console.log(data)
+                                window.location.replace("/board/view?idx=<%=vo.getBoard_idx()%>")
                             },
                             error: function (request, status, error) {
                                 console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -122,32 +120,31 @@
                     }
                 });
             });
+            $('#delete-do').on("click", function () {
+                if (confirm("삭제하시겠습니까?") == true) {
+                    const delete = $("#board-form").serialize();
+                    console.log(delete);
+                    $.ajax({
+                        cache: false,
+                        type: "POST",
+                        url: "/board/deleteBoard",
+                        data: delete,
+                        dataType: 'text',
+                        success: function (data) {
+                            alert("delete success");
+                            window.location.href = "/"
+                            console.log(data);
+                        },
+                        error: function (request, status, error) {
+                            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                        }
+                    });
+                } else {
+                    return;
+                }
+            });
         });
     });
-
-    // const delete
-    // = $("#delete-form").serialize();
-    // $(function () {
-    //     $('#delete-submit').on("click", function () {
-    //         console.log(delete);
-    //         $.ajax({
-    //             cache: false,
-    //             type: "POST",
-    //             url: "/board/delete",
-    //             data: delete,
-    //             dataType: 'json',
-    //             success: function (data) {
-    //                 alert("delete success");
-    //                 window.location.href = "/"
-    //                 console.log(data);
-    //             },
-    //             error: function (request, status, error) {
-    //                 console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-    //
-    //             }
-    //         });
-    //     });
-    // });
 </script>
 <script src="${pageContext.request.contextPath }/js/comm.js"></script>
 <link rel="stylesheet" type="text/css" href="/css/style.css">

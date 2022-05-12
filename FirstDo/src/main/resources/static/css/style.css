@@ -97,23 +97,26 @@ footer {
     text-align: right;
 }
 
-input#board_content {
+input#board_subject {
     width: 300px;
 }
 
-textarea#board_subject {
-    width: auto;
-    height: auto;
+textarea#board_content {
+    width: 70%;
+    height: 6.25em;
+    resize: none;
 }
 
 input#update-do {
     width: 300px;
     margin: 2px;
 }
+
 input#update-submit {
     width: 300px;
     margin: 2px;
 }
+
 input#cancel-button {
     width: 300px;
     margin: 2px;
@@ -123,6 +126,7 @@ input#delete-do {
     width: 300px;
     margin: 2px;
 }
+
 input#delete-submit {
     width: 300px;
     margin: 2px;
