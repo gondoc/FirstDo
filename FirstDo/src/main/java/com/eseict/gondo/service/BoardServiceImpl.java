@@ -86,36 +86,22 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     // 글 수정하기
-    // 원본 글의 작성자와 현 수정자의 user_idx()가 같을 것.
     // flag 처리 할 것.
-    public int updateBoard(BoardVO boardVO, String user_id) {
-        log.info("BoardServiceImpl-updateBoard 호출 : boardVO {}, user_id {}", boardVO, user_id);
-        BoardVO dbBoardVO = null;
-        UserVO dbUserVO = null;
-        int updateBoardFlag = 0; // 0 실패, 1 성공
-        if (boardVO != null && user_id != null) {
-            dbBoardVO = boardDAO.selectByIdx(boardVO.getBoard_idx());
-            log.info("BoardServiceImpl-updateBoard 수정 전 dbBoardVO 확인 {}", dbBoardVO);
-            dbUserVO = userDAO.selectByUserId(user_id);
-            log.info("BoardServiceImpl-updateBoard 계정 확인 dbUserVO {}", dbUserVO);
-            if (dbUserVO != null && dbUserVO.getUser_idx() == boardVO.getUser_idx()) {
-                try {
-                    log.info("BoardServiceImpl-updateBoard 유효 계정 확인, 원본 글 작성자 == 수정 희망자");
-                    boardDAO.updateBoard(boardVO);
-                    return updateBoardFlag = 1;
-                } catch (Exception e) {
-                    log.info("BoardServiceImpl-updateBoard update 중 오류 발생");
-                    log.info("BoardServiceImpl-insertUser insertBoard insertBoardFlag = 0 리턴");
-                    return updateBoardFlag;
-                }
-            } else {
-                log.info("BoardServiceImpl-updateBoard 유효하지 않은 계정이거나, 원본글 작성자와 수정희망자가 같지 않음.");
-                return updateBoardFlag;
+    public int updateBoard(BoardVO boardVO) {
+        log.info("BoardServiceImpl-updateBoard 호출 : boardVO {} ", boardVO);
+        int rs = 0;
+        if (boardVO != null) {
+            try {
+                rs = boardDAO.updateBoard(boardVO);
+                log.info("BoardServiceImpl-updateBoard rs {} ", rs);
+                return rs;
+            } catch (Exception e) {
+                log.info("BoardServiceImpl-updateBoard update 중 오류 발생");
+                log.info("BoardServiceImpl-insertUser insertBoard insertBoardFlag = 1 리턴");
+                return rs;
             }
-        } else {
-            log.info("BoardServiceImpl-insertUser insertBoard boardVO == null || user_id == null 오류 발생");
-            return updateBoardFlag;
         }
+        return rs;
     }
 
     @Override
@@ -123,33 +109,21 @@ public class BoardServiceImpl implements BoardService {
     // 원본 글의 작성자와 삭제 희망자가 일치할 것.
     // 삭제 전 원본 글이 유효할 것.
     // flag 활용할 것.
-    public int deleteBoard(BoardVO boardVO, String user_id) {
-        log.info("BoardServiceImpl-deleteBoard 호출 : boardVO {}, user_id {}", boardVO, user_id);
+    public int deleteBoard(BoardVO boardVO) {
+        log.info("BoardServiceImpl-deleteBoard 호출 : boardVO {}", boardVO);
         BoardVO dbBoardVO = null;
-        UserVO dbUserVO = null;
-        int deleteBoardFlag = 0; // 0 실패, 1 성공
-        if (boardVO != null && user_id != null) {
+        int rs = 0;
+        if (boardVO != null) {
             log.info("BoardServiceImpl-deleteBoard boardVO 존재, user_id 존재 확인");
-            dbUserVO = userDAO.selectByUserId(user_id);
-            if (dbUserVO != null && boardVO.getUser_idx() == dbUserVO.getUser_idx()) {
-                try {
-                    log.info("BoardServiceImpl-deleteBoard 유효한 계정 확인, 원본 글 작성자와 삭제 희망자간 일치함 확인");
-                    boardDAO.deleteBoard(boardVO.getBoard_idx());
-                    log.info("BoardService-deleteBoard 삭제 성공 flag = 1");
-                    return deleteBoardFlag = 1;
-                } catch (Exception e) {
-                    log.info("BoardServiceImpl-deleteBoard deleteBoard 실행중 오류 확인");
-                    log.info("BoardServiceImpl-deleteBoard deleteBoardFlag = 0 리턴");
-                    return deleteBoardFlag;
-                }
-            } else {
-                log.info("BoardServiceImpl-deleteBoard 계정이 유효하지 않거나, 원본 글 작성자와 삭제 희망자간 불일치함");
-                return deleteBoardFlag;
+            try {
+                log.info("BoardServiceImpl-deleteBoard 삭제 쿼리 실행");
+                boardDAO.deleteBoard(boardVO.getBoard_idx());
+            } catch (Exception e) {
+                log.info("BoardServiceImpl-deleteBoard deleteBoard 실행중 오류 확인");
+                return rs;
             }
-        } else {
-            log.info("BoardServiceImpl-deleteBoard boardVO == null || user_id == null deleteBoardFlag = 0");
-            return deleteBoardFlag;
         }
+        return rs;
     }
 
     @Override

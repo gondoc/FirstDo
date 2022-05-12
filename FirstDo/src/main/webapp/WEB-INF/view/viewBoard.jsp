@@ -3,12 +3,18 @@
 <%
     request.setCharacterEncoding("utf-8");
     BoardVO vo = (BoardVO) request.getAttribute("view");
+    String subject = vo.getBoard_subject();
+    String content = vo.getBoard_content();
+    content = content.replaceAll("<", "&lt"); // 태그 무시
+    content = content.replaceAll("\n", "<br>");
 %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8;">
     <title>상세보기</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <script type="text/javascript">
 
     </script>
@@ -23,23 +29,26 @@
             <input type="button" value="메인으로" onclick="location.href='/'" style="width: 200px;"/>
         </div>
     </div>
-
-    <form id="insert-form" method="post">
-        <div class="container-board">
-           <%
-
-                        // 여기에는 내용을 찍자
-                        String content = vo.getBoard_content();
-                        content = content.replaceAll("<", "&lt"); // 태그 무시
-                        content = content.replaceAll("\n", "<br>");
-                        out.println(content);
-
-           %>
+    <form id="board-form">
+        <div>
+            <input type="hidden" name="board_idx" value="<%=vo.getBoard_idx()%>">
         </div>
-        <input type="button" value="수정하기" style="width: 300px; margin: 2px;"/>
-        <input type="button" value="삭제하기" style="width: 300px; margin: 2px;"/>
+        <div class="container-body">
+            <label>글 제목</label><br>
+            <input type="text" name="board_subject" id="board_subject" value="<%=vo.getBoard_subject()%>" readonly>
+        </div>
+        <div class="container-body">
+            <label>글 본문</label><br>
+            <textarea name="board_content" id="board_content" readonly><%=vo.getBoard_content()%></textarea>
+        </div>
     </form>
-
+    <div style="text-align: center">
+        <input type="button" value="수정하기" id="update-do" style="display: inline-block"/>
+        <input type="button" value="수정하기" id="update-submit" style="display: none"/>
+        <input type="button" value="취소하기" id="cancel-button"
+               style="display: none;" onclick="document.location.reload()"/>
+        <input type="button" value="삭제하기" id="delete-do" style="display: inline-block"/>
+    </div>
 </div>
 <br>
 <footer>
@@ -47,7 +56,7 @@
         <table class="footer">
             <tr>
                 <td rowspan="2" style="vertical-align: middle;">
-                    <img src="images/eseLogo.png" alt="이에스이로고" title="이에스이로고">
+                    <img src="http://www.eseict.com/Nsco/images/ese_logo_ft.png" alt="이에스이로고" title="이에스이로고">
                 </td>
                 <td>경기도 성남시 분당구 판교로228번길 15, 1단지 3동 501호(삼평동)</td>
             </tr>
@@ -61,57 +70,85 @@
     </div>
 </footer>
 </body>
-<script>
+<script type="text/javascript">
     $(function () {
-        $('#delete-submit').on("click", function () {
-            const delete = $("#delete-form").serialize();
+        $("input#update-do").on("click", function () {
+            if (confirm("수정하시겠습니까?") == true) {
+                // board-form id를 update-form 으로 변경
+                $("#board-form").attr('id', 'update-form');
+                // board_subject, board_content readonly 속성 해제
+                $("input[name='board_subject']").attr("readonly", false);
+                $("textarea[name='board_content']").attr("readonly", false);
+                // cancel-button display on
+                $("input#cancel-button").css("display", "");
+                // update-do display none
+                $("input#update-do").css("display", "none");
+                // update-submit display on
+                $("input#update-submit").css("display", "");
+                // delete button display none
+                $("input#delete-do").css("display", "none");
+            } else {
+                $("input[name='board_subject']").attr("readonly", true);
+                $("textarea[name='board_content']").attr("readonly", true);
+                $("input[name='cancel-button']").css("display", "none");
+                return;
+            }
+            $(function () {
+                $("#update-submit").on("click", function () {
+                    const update = $("#update-form").serialize();
+                    alert(update);
 
-            console.log(delete);
-            $.ajax({
-                cache: false,
-                type: "POST",
-                url: "/board/delete",
-                data: delete,
-                dataType: 'json',
-                success: function (data) {
-                    alert("success");
-                    console.log(data);
-                },
-                error: function (request, status, error) {
-                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-
-                }
+                    if (confirm("작성한 내용으로 수정하시겠습니까?") == true) {
+                        $.ajax({
+                            cache: false,
+                            type: "POST",
+                            url: "/board/updateBoard",
+                            data: update,
+                            dataType: 'json',
+                            success: function (data) {
+                                alert("update success");
+                                window.location.href = "/board/view?${board_idx}"
+                                console.log(data);
+                            },
+                            error: function (request, status, error) {
+                                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                            }
+                        });
+                    } else {
+                        $("input[name='board_subject']").attr("readonly", false);
+                        $("textarea[name='board_content']").attr("readonly", false);
+                        $("input[name='cancel-button']").css("display", "");
+                        return;
+                    }
+                });
             });
         });
     });
 
-
-    $(function () {
-        $('#update-submit').on("click", function () {
-            const update = $("#update-form").serialize();
-
-            console.log(update);
-            $.ajax({
-                cache: false,
-                type: "POST",
-                url: "/board/board",
-                data: update,
-                dataType: 'json',
-                success: function (data) {
-                    alert("success");
-                    console.log(data);
-                },
-                error: function (request, status, error) {
-                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-
-                }
-            });
-        });
-    });
-
-
+    // const delete
+    // = $("#delete-form").serialize();
+    // $(function () {
+    //     $('#delete-submit').on("click", function () {
+    //         console.log(delete);
+    //         $.ajax({
+    //             cache: false,
+    //             type: "POST",
+    //             url: "/board/delete",
+    //             data: delete,
+    //             dataType: 'json',
+    //             success: function (data) {
+    //                 alert("delete success");
+    //                 window.location.href = "/"
+    //                 console.log(data);
+    //             },
+    //             error: function (request, status, error) {
+    //                 console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+    //
+    //             }
+    //         });
+    //     });
+    // });
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath }/static/js/comm.js"></script>
+<script src="${pageContext.request.contextPath }/js/comm.js"></script>
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 </html>

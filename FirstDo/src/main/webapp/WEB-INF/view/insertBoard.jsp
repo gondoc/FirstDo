@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <form id="insert-form" >
+    <form id="insert-form">
         <label>제목</label>
         <input name="board_subject" type="text" id="board_subject" width="300px" placeholder="글의 제목입니다." required> <br>
         <br/>
@@ -71,6 +71,7 @@
                 dataType: 'json',
                 success: function (data) {
                     alert("success");
+                    window.location.href="/";
                     console.log(data);
                 },
                 error: function (request, status, error) {

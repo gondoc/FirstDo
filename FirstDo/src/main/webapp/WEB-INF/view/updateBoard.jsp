@@ -21,10 +21,6 @@
             <input type="button" value="메인으로" onclick="location.href='/'" style="width: 200px;"/>
         </div>
     </div>
-    <button type="button"
-            onclick='SendPost("${pageContext.request.contextPath }/qna/qnaInsertForm",{"p":${pv.currentPage },"s":${pv.pageSize },"b":${pv.blockSize }},"post")'>
-        글쓰기
-    </button>
 </div>
 <br>
 <footer>

@@ -18,10 +18,10 @@ public interface BoardService {
 	BoardVO selectByIdx(int board_idx);
 
 	// <!-- 03. update_글 수정하기 -->
-	int updateBoard(BoardVO boardVO, String user_id);
+	int updateBoard(BoardVO boardVO);
 
 	// <!-- 04. delete_글 삭제하기 -->
-	int deleteBoard(BoardVO boardVO, String user_id);
+	int deleteBoard(BoardVO boardVO);
 	
 	// <!-- 05. select_목록 가져오기 -->
 	PagingVO<BoardVO> selectList(int currentPage, int pageSize, int blockSize) throws SQLException;

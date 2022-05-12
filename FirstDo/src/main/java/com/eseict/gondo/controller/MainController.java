@@ -85,8 +85,13 @@ public class MainController {
     }
 
     @RequestMapping(value = "/updateBoard", method = RequestMethod.GET)
-    public String updateBoard() {
+    public String updateBoard(
+            @RequestParam("idx") int board_idx, Model model) {
         log.info("MainController-updateBoard 호출");
+        BoardVO dbBoardVO = null;
+        dbBoardVO = boardService.selectByIdx(board_idx);
+        log.info("MainController-viewBoard dbBoardVO {} ", dbBoardVO);
+        model.addAttribute("view", dbBoardVO);
         log.info("MainController-updateBoard insertBoard.jsp 이동");
         return "updateBoard";
     }
