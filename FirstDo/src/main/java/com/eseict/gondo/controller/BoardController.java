@@ -24,8 +24,6 @@ import java.util.HashMap;
 public class BoardController {
 
     BoardService boardService;
-
-    @Autowired
     public void BoardService(BoardService boardService) {
         this.boardService = boardService;
     }
