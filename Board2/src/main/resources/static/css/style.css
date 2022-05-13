@@ -1,0 +1,29 @@
+@charset "utf-8";
+#wrapper {
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 100px;
+
+}
+
+header {
+    border: 2px solid black;
+    vertical-align: middle;
+    text-align: center;
+    height: 100px;
+    margin: 15px;
+    padding: 10px;
+    font-size: 10pt;
+}
+
+footer {
+    border: 2px solid black;
+    vertical-align: middle;
+    text-align: center;
+    height: 100px;
+    position: relative;
+    transform: translateY(-100%);
+    margin: 15px;
+    padding: 10px;
+    font-size: 10pt;
+}
