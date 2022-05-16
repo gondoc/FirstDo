@@ -1,19 +1,14 @@
 package com.eseict.gondo.controller;
 
 import com.eseict.gondo.Message;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.eseict.gondo.service.BoardService;
+import com.eseict.gondo.vo.BoardVO;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.eseict.gondo.service.BoardService;
-import com.eseict.gondo.service.UserService;
-import com.eseict.gondo.vo.BoardVO;
-import com.eseict.gondo.vo.UserVO;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 
@@ -27,10 +22,6 @@ public class BoardController {
     public void BoardService(BoardService boardService) {
         this.boardService = boardService;
     }
-
-    @Autowired
-    private UserService userService;
-
 
     @PostMapping(value = "/board")
     public ResponseEntity<String> Board(

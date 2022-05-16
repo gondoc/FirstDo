@@ -20,7 +20,6 @@ public class MainController {
 
     @GetMapping(value = "/board")
     public String board() {
-
         return "board";
     }
 

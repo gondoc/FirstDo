@@ -5,21 +5,17 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardRequestDto {
 
-    private String board_title;
-    private String board_content;
-    private LocalDateTime board_modifiedDate;
+    private String boardTitle;
+    private String boardContent;
 
     public Board toEntity(){
         return Board.builder()
-                .board_title(board_title)
-                .board_content(board_content)
-                .board_modifiedDate(board_modifiedDate)
+                .boardTitle(boardTitle)
+                .boardContent(boardContent)
                 .build();
     }
 }

@@ -1,5 +1,7 @@
 package com.eseict.gondo.board2.service;
 
+import com.eseict.gondo.board2.CustomException;
+import com.eseict.gondo.board2.ErrorCode;
 import com.eseict.gondo.board2.dto.BoardRequestDto;
 import com.eseict.gondo.board2.dto.BoardResponseDto;
 import com.eseict.gondo.board2.entity.Board;
@@ -23,12 +25,12 @@ public class BoardService {
     @Transactional
     public Long save(final BoardRequestDto boardRequestDto) {
         Board entity = boardRepository.save(boardRequestDto.toEntity());
-        return entity.getBoard_idx();
+        return entity.getId();
     }
 
     // 리스트 조회
     public List<BoardResponseDto> findAll() {
-        Sort sort = Sort.by(Sort.Direction.DESC, "board_idx", "board_regDate");
+        Sort sort = Sort.by(Sort.Direction.DESC, "id", "boardRegDate");
         List<Board> boardList = boardRepository.findAll(sort);
         return boardList.stream().map(BoardResponseDto::new).collect(Collectors.toList());
     }
@@ -36,10 +38,10 @@ public class BoardService {
 
     // 수정
     @Transactional
-    public Long update(final Long board_idx, final BoardRequestDto boardRequestDto){
-        Board entity = boardRepository.findById(board_idx).orElseThrow(()-> new NullPointerException());
-        entity.update(boardRequestDto.getBoard_title(), boardRequestDto.getBoard_content(), boardRequestDto.getBoard_modifiedDate());
-        return board_idx;
+    public Long update(final Long id, final BoardRequestDto boardRequestDto) {
+        Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+        entity.update(boardRequestDto.getBoardTitle(), boardRequestDto.getBoardContent(), boardRequestDto.toEntity().getBoardModifiedDate());
+        return id;
     }
 
     // 삭제
