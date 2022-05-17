@@ -3,15 +3,22 @@
  */
 function isValid() {
 
-    const boardTitle = $('input[id=boardTitle]').val();
-    const boardContent = $('textarea[id=boardContent]').val();
-    if (boardTitle.trim().length == 0) {
+    const form = document.getElementById('form');
+
+    // const boardTitle = $('input[id=boardTitle]').val();
+    // const boardContent = $('textarea[id=boardContent]').val();
+
+    if (!form.title.value.trim()) {
         alert('글 제목을 입력해주세요.');
+        form.title.value = '';
+        form.title.focus();
         return false;
     }
 
-    if (boardContent.trim().length == 0) {
-        alert('글 내용을 입력해주세요.');
+    if (!form.content.value.trim()) {
+        alert('글 제목을 입력해주세요.');
+        form.content.value = '';
+        form.content.focus();
         return false;
     }
     return true;
@@ -25,13 +32,14 @@ function save() {
     if (!isValid()) {
         return false;
     }
-
-    const boardTitle = $('input[id=boardTitle]').val();
-    const boardContent = $('textarea[id=boardContent]').val();
+    const form = document.getElementById('form');
+    // const boardTitle = $('input[id=boardTitle]').val();
+    // const boardContent = $('textarea[id=boardContent]').val();
 
     const params = {
-        boardTitle: boardTitle,
-        boardContent : boardContent
+        boardTitle: form.title.value,
+        boardContent: form.content.value,
+        boardDeleteYn: 'N'
     };
 
     fetch('/board/board', {

@@ -7,8 +7,25 @@
 <body>
 <div id="wrapper">
     <div th:replace="header.html"></div>
-    <div th:replace="insertContainer.html"></div>
-
+    <div id="insertContainer">
+        <form id="form" class="form-horizontal">
+            <div class="form-group">
+                <label for="title">제목</label>
+                <div>
+                    <input type="text" id="title" class="form-control" placeholder="글 제목을 입력하세요">
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="content">내용</label>
+                <div>
+                    <textarea id="content" class="form-control" placeholder="글 내용을 입력하세요"></textarea>
+                </div>
+            </div>
+            <input type="button" value="등록하기" onclick="save()"/>
+            <input type="button" value="뒤로가기" onclick="goBoardList()"/>
+        </form>
+    </div>
 </div>
 
 

@@ -26,16 +26,27 @@ public class BoardController {
 
     // 리스트 조회
     @GetMapping("/board")
-    public List<BoardResponseDto> findAll() {
-        return boardService.findAll();
+    public List<BoardResponseDto> findAll(@RequestParam final char boardDeleteYn) {
+        return boardService.findAllByDeleteYn(boardDeleteYn);
     }
 
     // 수정
     @PatchMapping("/board/{id}")
-    public Long save(
+    public Long update(
             @PathVariable final Long id,
-            @RequestBody final BoardRequestDto params
-    ) {
+            @RequestBody final BoardRequestDto params) {
         return boardService.update(id, params);
+    }
+
+    // 상세보기
+    @GetMapping("/board/{id}")
+    public BoardResponseDto findById(@PathVariable final Long id) {
+        return boardService.findById(id);
+    }
+
+    // 삭제
+    @DeleteMapping("/board/{id}")
+    public Long delete(@PathVariable final Long id){
+        return boardService.delete(id);
     }
 }

@@ -1,0 +1,18 @@
+<div id="viewContainer">
+    <div class="form-group">
+        <label for="boardTitle">title</label>
+        <div>
+            <input type="text" id="boardTitle" class="form-control" placeholder="글 제목을 입력하세요">
+        </div>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="boardContent">content</label>
+        <div>
+            <textarea id="boardContent" class="form-control" placeholder="글 내용을 입력하세요"></textarea>
+        </div>
+    </div>
+    <input type="button" value="수정하기" onclick="save()"/>
+    <input type="button" value="삭제하기" onclick="del()"/>
+    <input type="button" value="뒤로가기" onclick="goBoardList()"/>
+</div>

@@ -11,11 +11,13 @@ public class BoardRequestDto {
 
     private String boardTitle;
     private String boardContent;
+    private char boardDeleteYn;
 
     public Board toEntity(){
         return Board.builder()
                 .boardTitle(boardTitle)
                 .boardContent(boardContent)
+                .boardDeleteYn(boardDeleteYn)
                 .build();
     }
 }
