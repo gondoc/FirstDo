@@ -1,6 +1,7 @@
 /**
  * 유효성 검사
  */
+/* <!CDATA[*/
 function isValid() {
 
     const form = document.getElementById('form');
@@ -37,8 +38,8 @@ function save() {
         boardDeleteYn: 'N'
     };
 
-    const id = id ;
-    const uri = (id) ? `/api/boards/${id}` : '/board/board';
+
+    const uri = (id) ? `/board/board/${id}` : '/board/board';
     const method = (id) ? 'PATCH' : 'POST';
 
     fetch(uri, {
@@ -54,7 +55,7 @@ function save() {
         }
 
         alert('저장되었습니다.');
-        location.href = '/board/list';
+        location.href = '/board/';
 
     }).catch(error => {
         alert('오류가 발생하였습니다.');
@@ -74,3 +75,4 @@ function goBoardList() {
     location.href = "/board";
     return true;
 }
+/*]]>*/

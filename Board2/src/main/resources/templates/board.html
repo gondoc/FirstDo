@@ -41,10 +41,12 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
-<script th:inline="javascript" th:src="@{/js/boardScript.js}" charset="utf-8">
-    //<![CDATA[
-    //
-    // ]]>
+<script type="text/javascript" th:inline="javascript">
+    const id = $.parseJSON('[[ ${obj.id} ]]'); </script>
+<script type="text/javascript" th:src="@{/js/boardScript.js}">
+
 </script>
+<!--<script type="text/javascript" th:inline="javascript" th:src="@{/js/boardScript.js}">-->
+<!--</script>-->
 <!--<script th:inline="javascript" src="@{/js/boardScript.js}"><![CDATA[]]></script>-->
 </html>
