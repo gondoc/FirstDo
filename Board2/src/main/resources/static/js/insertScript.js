@@ -5,9 +5,6 @@ function isValid() {
 
     const form = document.getElementById('form');
 
-    // const boardTitle = $('input[id=boardTitle]').val();
-    // const boardContent = $('textarea[id=boardContent]').val();
-
     if (!form.title.value.trim()) {
         alert('글 제목을 입력해주세요.');
         form.title.value = '';
@@ -33,8 +30,6 @@ function save() {
         return false;
     }
     const form = document.getElementById('form');
-    // const boardTitle = $('input[id=boardTitle]').val();
-    // const boardContent = $('textarea[id=boardContent]').val();
 
     const params = {
         boardTitle: form.title.value,
@@ -42,8 +37,12 @@ function save() {
         boardDeleteYn: 'N'
     };
 
-    fetch('/board/board', {
-        method: 'POST',
+    const id = id ;
+    const uri = (id) ? `/api/boards/${id}` : '/board/board';
+    const method = (id) ? 'PATCH' : 'POST';
+
+    fetch(uri, {
+        method: method,
         headers: {
             'Content-Type': 'application/json',
         },
@@ -63,9 +62,8 @@ function save() {
 }
 
 function goBoardList() {
-    const boardTitle = $('input[id=boardTitle]').val();
-    const boardContent = $('textarea[id=boardContent]').val();
-    if (boardTitle.trim().length != 0 || boardContent.trim().length != 0) {
+    const form = document.getElementById('form');
+    if (!form.title.value.trim() || !form.content.value.trim()) {
         if (confirm('작성중인 글이 삭제됩니다. 뒤로가시겠습니까?')) {
             location.href = "/board";
             return true;
@@ -76,4 +74,3 @@ function goBoardList() {
     location.href = "/board";
     return true;
 }
-

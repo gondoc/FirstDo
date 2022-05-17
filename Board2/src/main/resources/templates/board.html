@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
     <title>board</title>
@@ -41,5 +41,10 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
-<script th:src="@{/js/boardScript.js}" type="text/javascript" charset="utf-8"></script>
+<script th:inline="javascript" th:src="@{/js/boardScript.js}" charset="utf-8">
+    //<![CDATA[
+    //
+    // ]]>
+</script>
+<!--<script th:inline="javascript" src="@{/js/boardScript.js}"><![CDATA[]]></script>-->
 </html>
