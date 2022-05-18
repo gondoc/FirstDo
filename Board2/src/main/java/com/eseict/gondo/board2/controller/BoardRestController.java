@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/board")
 @RequiredArgsConstructor
-public class BoardController {
+public class BoardRestController {
 
     private final BoardService boardService;
 

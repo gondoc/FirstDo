@@ -1,27 +1,29 @@
 package com.eseict.gondo.board2.controller;
 
 import com.eseict.gondo.board2.service.BoardService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequiredArgsConstructor
+@RequestMapping("/")
 public class MainController {
 
-    BoardService boardService;
+    private final BoardService boardService;
 
-    public void BoardService(BoardService boardService) {
-        this.boardService = boardService;
-    }
-
-    @GetMapping(value = "/")
-    public String home() {
-        return "home";
-    }
-
-    @GetMapping(value = "/board")
-    public String board() {
-        return "board";
-    }
+//    @GetMapping(value = "/")
+//    public String home(Model model) {
+//        return "home";
+//    }
+//
+//    @GetMapping(value = "/board")
+//    public String board(Model model) {
+//        char deleteYn = 0;
+//        List<BoardResponseDto> boardList = boardService.findAllByDeleteYn(deleteYn);
+//        model.addAttribute("boardList", boardList);
+//        return "board";
+//    }
 
 
 }

@@ -1,11 +1,13 @@
 /**
  * 유효성 검사
  */
-/* <!CDATA[*/
 function isValid() {
 
     const form = document.getElementById('form');
-
+    const titleValue = form.title.value.trim();
+    const contentValue = form.content.value.trim();
+    console.log("titleValue", titleValue);
+    console.log("contentValue", contentValue);
     if (!form.title.value.trim()) {
         alert('글 제목을 입력해주세요.');
         form.title.value = '';
@@ -14,7 +16,7 @@ function isValid() {
     }
 
     if (!form.content.value.trim()) {
-        alert('글 제목을 입력해주세요.');
+        alert('글 내용을 입력해주세요.');
         form.content.value = '';
         form.content.focus();
         return false;
@@ -38,7 +40,8 @@ function save() {
         boardDeleteYn: 'N'
     };
 
-
+    const id = `${id}`;
+    console.log("id", id);
     const uri = (id) ? `/board/board/${id}` : '/board/board';
     const method = (id) ? 'PATCH' : 'POST';
 
@@ -64,7 +67,14 @@ function save() {
 
 function goBoardList() {
     const form = document.getElementById('form');
-    if (!form.title.value.trim() || !form.content.value.trim()) {
+
+    const titleValue = form.title.value.trim();
+    const contentValue = form.content.value.trim();
+
+    console.log("titleValue.length", titleValue.length);
+    console.log("contentValue.length", contentValue.length);
+
+    if (titleValue.length>0 || contentValue.length>0) {
         if (confirm('작성중인 글이 삭제됩니다. 뒤로가시겠습니까?')) {
             location.href = "/board";
             return true;
@@ -75,4 +85,3 @@ function goBoardList() {
     location.href = "/board";
     return true;
 }
-/*]]>*/
