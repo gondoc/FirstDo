@@ -34,8 +34,16 @@ function save() {
     }
     const form = document.getElementById('form');
 
-    const titleValue = form.title.value;
-    const contentValue = form.content.value;
+    const titleValue = $('input[id=title]').val();
+    const contentValue = $('textarea[id=content]').val();
+    console.log(titleValue);
+    console.log(contentValue);
+    // 태그 무시 추후 적용 예정
+    // console.log("contentValue let", contentValue);
+    // contentValue = contentValue.replace(/<br\/>/ig, "\n");
+    // console.log("contentValue replace 1", contentValue);
+    // contentValue = contentValue.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
+    // console.log("contentValue replace 2", contentValue);
 
     const params = {
         title: titleValue,
@@ -52,8 +60,8 @@ function save() {
         if (!response.ok) {
             throw new Error('failed');
         }
-        // alert('저장되었습니다.');
-        // location.href = '/board';
+        alert('저장되었습니다.');
+        location.href = '/boards';
     }).catch(error => {
         alert('오류가 발생하였습니다.');
     });

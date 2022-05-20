@@ -26,6 +26,7 @@ public class BoardPageController {
         return "home";
     }
 
+
     @GetMapping(value = "/board")
     public String board(@PageableDefault Pageable pageable, Model model) {
         char deleteYn = 0;

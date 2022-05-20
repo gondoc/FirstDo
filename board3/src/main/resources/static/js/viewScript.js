@@ -1,13 +1,11 @@
-window.onload = () => {
-    findBoard();
-}
+// window.onload = () => {
+//     findBoard();
+// }
 
 /**
  * 게시글 조회
  */
-function findBoard() {
-
-    const id = `${id}`;
+function goUpdate() {
 
     fetch(`/board/board/${id}`).then(response => {
         if (!response.ok) {
@@ -17,8 +15,6 @@ function findBoard() {
 
     }).then(json => {
         console.table(json);
-        json.boardRegDate = moment(json.boardRegDate).format('YYYY-MM-DD HH:mm:ss');
-
         Object.keys(json).forEach(key => {
             const elem = document.getElementById(key);
             if (elem) {
@@ -36,7 +32,7 @@ function findBoard() {
  * 뒤로가기
  */
 function goList() {
-    location.href = '/board';
+    location.href = '/boards';
 }
 
 /**
@@ -50,8 +46,6 @@ function goUpdate() {
  * 삭제하기
  */
 function del() {
-
-    const id = `${id}`;
 
     if (!confirm(`게시글을 삭제할까요?`)) {
         return false;

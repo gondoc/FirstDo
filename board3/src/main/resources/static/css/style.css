@@ -71,4 +71,14 @@ div.form-group {
     padding: 15px;
 }
 
+.no {
+    display: inline-block;
+    margin: 5px;
+    padding: 3px;
+}
 
+.title {
+    display: inline-block;
+    margin: 5px;
+    padding: 3px;
+}
