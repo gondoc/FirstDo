@@ -48,5 +48,4 @@ public class BoardController {
     public String insertView() {
         return "/insert";
     }
-
 }

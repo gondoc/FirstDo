@@ -82,3 +82,50 @@ div.form-group {
     margin: 5px;
     padding: 3px;
 }
+
+input#title {
+    display: table;
+    width: 700px;
+}
+
+textarea#content {
+    display: table;
+    width: 700px;
+}
+
+input#updateTitle {
+    display: none;
+    width: 700px;
+}
+
+textarea#updateContent {
+    display: none;
+    width: 700px;
+}
+
+p#title {
+    display: flex;
+}
+
+p#content {
+    display: flex;
+}
+
+div#insertForm {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/*update 진행관련 css*/
+a#updateBtn {
+    display: none;
+}
+
+a#preBtn {
+    display: inline-block;
+}
+
+
+button#cancelBtn {
+    display: none;
+}

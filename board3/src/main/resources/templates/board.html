@@ -16,8 +16,8 @@
             <th th:class="no">no</th>
             <th th:class="title">제목</th>
         </tr>
-        <tr th:each="board : ${boardList}">
-            <td th:class="no" th:text="${board.id}"></td>
+        <tr th:each="board : ${boardList}" >
+            <td th:class="no" th:text="${board.getId()}"></td>
             <td th:class="title">
                 <a th:href="|@{/board/board/}${board.getId()}|" th:text="${board.title}"></a>
             </td>

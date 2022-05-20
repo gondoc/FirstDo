@@ -27,7 +27,11 @@ public class BoardRestController {
         return boardService.viewBoard(id);
     }
 
-
-
-
+    // 삭제
+    // id 값으로 보드를 찾아 삭제 진행 Long id PK 리턴
+    @DeleteMapping("/board/board/{id}")
+    public Long delete(@PathVariable final Long id){
+        log.info("Long id {}", id);
+        return boardService.deleteBoard(id);
+    }
 }

@@ -40,4 +40,14 @@ public class BoardService {
         return new ResponseDto(entity);
     }
 
+
+    // 삭제
+    // controller에서 전달받은 id 값으로 delete 진행
+    @Transactional
+    public Long deleteBoard(final Long id) {
+        boardRepository.deleteById(id);
+        return id;
+    }
+
+
 }

@@ -1,11 +1,29 @@
-// window.onload = () => {
-//     findBoard();
-// }
+function preUpdate(){
+    if(confirm("수정하시겠습니까?")==true){
+        document.getElementById("preBtn").style.display = "none";
+        document.getElementById("delBtn").style.display = "none";
+        document.getElementById("updateTitle").style.display = "flex";
+        document.getElementById("updateContent").style.display = "flex";
+
+        document.getElementById("cancelBtn").style.display = "inline-block";
+        document.getElementById("updateBtn").style.display = "inline-block";
+
+        document.getElementById("title").style.display = "none";
+        document.getElementById("content").style.display = "none";
+    } else{
+        return false;
+    }
+    return true;
+}
 
 /**
  * 게시글 조회
  */
 function goUpdate() {
+
+    const id = document.getElementById("id").value;
+    console.log(" id  : ", id);
+    location.href = "/board/update/" + id;
 
     fetch(`/board/board/${id}`).then(response => {
         if (!response.ok) {
@@ -37,21 +55,29 @@ function goList() {
 
 /**
  * 수정하기
- */
-function goUpdate() {
-    location.href = `/board/board?id=[[ ${id} ]]`;
-}
+//  */
+// function goUpdate() {
+//     const id = '${id}';
+//
+//     location.href = `/board/board?id=[[ ${id} ]]`;
+// }
 
 /**
  * 삭제하기
  */
 function del() {
 
-    if (!confirm(`게시글을 삭제할까요?`)) {
+    if (!confirm('해당 게시물을 삭제하시겠습니까?')) {
         return false;
     }
 
-    fetch(`/board/board/${id}`, {
+    // const id = document.getElementById('id');
+    // const boardId = id.id.value;
+
+    const id = document.getElementById('id').value;
+    const uri = '/board/board/' + id;
+
+    fetch(uri, {
         method: 'DELETE',
         headers: {'Content-Type': 'application/json'},
 

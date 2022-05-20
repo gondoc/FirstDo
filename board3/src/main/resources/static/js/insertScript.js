@@ -1,3 +1,6 @@
+window.onload = () => {
+    document.getElementById("title").focus();
+}
 /**
  * 유효성 검사
  */

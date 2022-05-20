@@ -10,20 +10,25 @@
     <div>
         <form class="form-horizontal form-view">
             <label for="title">글 제목</label>
+            <input type="hidden" id="id" th:value="${id}"/>
             <div>
                 <p id="title" th:text="${board.title}"></p>
+                <input type="text" id="updateTitle" class="form-control" th:value="${board.title}" placeholder="글 제목을 입력하세요">
             </div>
             <label for="content">글 내용</label>
             <div>
                 <p id="content" th:text="${board.content}"></p>
+                <textarea id="updateContent" class="form-control" th:text="${board.content}"  placeholder="글 내용을 입력하세요"></textarea>
             </div>
         </form>
     </div>
 
     <div>
-        <a href="javascript:void(0);" onclick="goList()">목록으로</a>
-        <a href="javascript:void(0);" onclick="goUpdate()">수정하기</a>
-        <button type="button" onclick="del()">삭제하기</button>
+        <a href="javascript:void(0);" id="listBtn" onclick="goList()">goList목록으로</a>
+        <a href="javascript:void(0);" id="preBtn" onclick="preUpdate()">pre수정하기</a>
+        <a href="javascript:void(0);" id="updateBtn" onclick="goUpdate()">update수정하기</a>
+        <button type="button" id="delBtn" onclick="del()">del삭제하기</button>
+        <button type="button" id="cancelBtn" onclick="cancel()">cancel취소하기</button>
     </div>
 </div>
 
