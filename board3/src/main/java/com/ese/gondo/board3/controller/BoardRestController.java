@@ -35,12 +35,10 @@ public class BoardRestController {
         return boardService.deleteBoard(id);
     }
 
-    // 수정
-    // id 값으로 보드를 찾아 삭제 진행 Long id PK 리턴
-    @PatchMapping("/board/board/{id}")
-    public Long delete(@PathVariable final Long id){
-        log.info("Long id {}", id);
-        return boardService.updateBoard(id);
+    @PatchMapping("board/board/{id}")
+    public Long update(@PathVariable final Long id, @RequestBody RequestDto requestDto){
+        log.info("Long id {}, RequestDto requestDto {} " , id, requestDto);
+        return boardService.updateBoard(requestDto, id);
     }
 
 

@@ -17,33 +17,59 @@ function preUpdate(){
 }
 
 /**
- * 게시글 조회
+ * 게시글 수정
  */
 function goUpdate() {
 
     const id = document.getElementById("id").value;
-    console.log(" id  : ", id);
-    location.href = "/board/update/" + id;
+    console.log("게시물 번호 id  : ", id);
+    const uri = '/board/board/' + id;
+    const titleValue = document.getElementById("updateTitle").value;
+    const contentValue = document.getElementById("updateContent").value;
 
-    fetch(`/board/board/${id}`).then(response => {
+    const params = {
+        title: titleValue,
+        content: contentValue
+    };
+    console.log(params);
+
+    // location.href = "/board/update/" + id;
+
+    fetch(uri, {
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(params)
+    }).then(response => {
         if (!response.ok) {
             throw new Error('Request failed...');
         }
-        return response.json();
 
-    }).then(json => {
-        console.table(json);
-        Object.keys(json).forEach(key => {
-            const elem = document.getElementById(key);
-            if (elem) {
-                elem.innerText = json[key];
-            }
-        });
+        alert('수정되었습니다.');
+        goList();
 
     }).catch(error => {
-        alert('게시글 정보를 찾을 수 없습니다.');
-        goList();
+        alert('오류가 발생하였습니다.');
     });
+
+    // fetch(uri).then(response => {
+    //     if (!response.ok) {
+    //         throw new Error('Request failed...');
+    //     }
+    //     return response.json();
+    //
+    // }).then(json => {
+    //     console.table(json);
+    //     Object.keys(json).forEach(key => {
+    //         const elem = document.getElementById(key);
+    //         if (elem) {
+    //             elem.innerText = json[key];
+    //         }
+    //     });
+    //
+    // }).catch(error => {
+    //     alert('게시글 정보를 찾을 수 없습니다.');
+    //     goList();
+    // });
 }
 
 /**
