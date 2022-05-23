@@ -31,12 +31,12 @@ a.location {
     text-align: right;
 }
 
-#userId {
+.form-control{
     text-align: center;
 }
 
-#userPw {
-    text-align: center;
+textarea#content.form-control{
+    text-align: left;
 }
 
 #loginContainer {
@@ -128,4 +128,23 @@ a#preBtn {
 
 button#cancelBtn {
     display: none;
+}
+
+div.location_board {
+    /*display: inline-block;*/
+    text-align: center;
+}
+
+a#location_edit {
+    display: none;
+}
+
+a#location_signUp{
+    display: inline-block;
+}
+a#location_findId{
+    display: inline-block;
+}
+a#location_findPw{
+    display: inline-block;
 }

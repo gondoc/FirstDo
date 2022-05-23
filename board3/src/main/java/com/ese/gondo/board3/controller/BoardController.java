@@ -1,6 +1,6 @@
 package com.ese.gondo.board3.controller;
 
-import com.ese.gondo.board3.Dto.ResponseDto;
+import com.ese.gondo.board3.Dto.ResponseBoardDto;
 import com.ese.gondo.board3.Entity.Board;
 import com.ese.gondo.board3.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +38,7 @@ public class BoardController {
     // 상세보기
     @GetMapping("board/board/{id}")
     public String boardView(@PathVariable final Long id, Model model) {
-        ResponseDto board = boardService.viewBoard(id);
+        ResponseBoardDto board = boardService.viewBoard(id);
         model.addAttribute("id", id);
         model.addAttribute("board", board);
         return "/view";

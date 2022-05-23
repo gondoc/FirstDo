@@ -1,6 +1,6 @@
 package com.ese.gondo.board3.Entity;
 
-import com.ese.gondo.board3.Dto.RequestDto;
+import com.ese.gondo.board3.Dto.RequestBoardDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,5 +14,5 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE Board b set b.title = : title, b.content = : content WHERE b.id =: id")
-    int updateBoard(RequestDto requestDto, @Param("id") final Long id);
+    int updateBoard(RequestBoardDto requestBoardDto, @Param("id") final Long id);
 }

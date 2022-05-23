@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RequestDto {
+public class RequestBoardDto {
 
     private String title;
     private String content;

@@ -1,7 +1,7 @@
 package com.ese.gondo.board3.controller;
 
-import com.ese.gondo.board3.Dto.RequestDto;
-import com.ese.gondo.board3.Dto.ResponseDto;
+import com.ese.gondo.board3.Dto.RequestBoardDto;
+import com.ese.gondo.board3.Dto.ResponseBoardDto;
 import com.ese.gondo.board3.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,14 +15,14 @@ public class BoardRestController {
     private final BoardService boardService;
 
     @PostMapping("/board/board")
-    public Long insertBoard(@RequestBody RequestDto requestDto){
-        return boardService.insertBoard(requestDto);
+    public Long insertBoard(@RequestBody RequestBoardDto requestBoardDto){
+        return boardService.insertBoard(requestBoardDto);
     }
 
     // 상세보기
     // 현재 미사용
     @GetMapping("/board/{id}")
-    public ResponseDto findById(@PathVariable final Long id) {
+    public ResponseBoardDto findById(@PathVariable final Long id) {
         log.info("Long Id {} ", id);
         return boardService.viewBoard(id);
     }
@@ -36,9 +36,9 @@ public class BoardRestController {
     }
 
     @PatchMapping("board/board/{id}")
-    public Long update(@PathVariable final Long id, @RequestBody RequestDto requestDto){
-        log.info("Long id {}, RequestDto requestDto {} " , id, requestDto);
-        return boardService.updateBoard(requestDto, id);
+    public Long update(@PathVariable final Long id, @RequestBody RequestBoardDto requestBoardDto){
+        log.info("Long id {}, RequestDto requestDto {} " , id, requestBoardDto);
+        return boardService.updateBoard(requestBoardDto, id);
     }
 
 

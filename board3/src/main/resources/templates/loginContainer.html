@@ -1,8 +1,25 @@
 <div id="loginContainer">
+    <form id="form" class="form-horizontal">
+        <div class="form-group">
+            <label for="userId">ID</label>
+            <div>
+                <input id="userId" name="userId" class="form-control" placeholder="아이디를 입력하세요">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="userPw">PW</label>
+            <div>
+                <input id="userPw" name="userPw" class="form-control" placeholder="패스워드를 입력하세요">
+            </div>
+        </div>
+        <input type="button" onclick="return login()" value="로그인">
+    </form>
     <div>
-        <label>ID</label>
-        <input id="userId" name="userId" class="userId" placeholder="아이디를 입력하세요">&nbsp;
-        <label>PW</label>
-        <input id="userPw" name="userPw" class="userPw" placeholder="패스워드를 입력하세요">
+        <p>${session.userName}님&nbsp;환영합니다.</p>
     </div>
+    <a th:href="@{/signUp}" id="location_signUp">회원가입</a>
+    <a th:href="@{/edit}" id="location_edit">회원정보 수정</a>
+    <a th:href="@{/findId}" id="location_findId">ID찾기</a>
+    <a th:href="@{/findPw}" id="location_findPw">PW찾기</a>
 </div>
+

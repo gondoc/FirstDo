@@ -8,8 +8,10 @@
 <div id="wrapper">
     <div th:replace="header.html"></div>
     <div th:replace="loginContainer.html"></div>
-    <div>
-        <a th:href="@{/boards}" id="location">게시판 이동</a>
+    <br>
+    <div class="location_board">
+        <br>
+        <a th:href="@{/boards}" id="location_board">게시판 이동</a>
     </div>
 </div>
 
@@ -22,4 +24,5 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+<script type="text/javascript" th:src="@{/js/home.js}"></script>
 </html>

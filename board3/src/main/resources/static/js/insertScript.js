@@ -7,10 +7,7 @@ window.onload = () => {
 function isValid() {
 
     const form = document.getElementById('form');
-    const titleValue = form.title.value.trim();
-    const contentValue = form.content.value.trim();
-    console.log("titleValue", titleValue);
-    console.log("contentValue", contentValue);
+
     if (!form.title.value.trim()) {
         alert('글 제목을 입력해주세요.');
         form.title.value = '';
@@ -39,8 +36,7 @@ function save() {
 
     const titleValue = $('input[id=title]').val();
     const contentValue = $('textarea[id=content]').val();
-    console.log(titleValue);
-    console.log(contentValue);
+
     // 태그 무시 추후 적용 예정
     // console.log("contentValue let", contentValue);
     // contentValue = contentValue.replace(/<br\/>/ig, "\n");
@@ -69,6 +65,7 @@ function save() {
         alert('오류가 발생하였습니다.');
     });
 }
+
 function goBoardList() {
     const title = $('input[id=title]').val();
     const content = $('textarea[id=content]').val();

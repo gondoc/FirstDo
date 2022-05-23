@@ -1,7 +1,7 @@
 package com.ese.gondo.board3.service;
 
-import com.ese.gondo.board3.Dto.RequestDto;
-import com.ese.gondo.board3.Dto.ResponseDto;
+import com.ese.gondo.board3.Dto.RequestBoardDto;
+import com.ese.gondo.board3.Dto.ResponseBoardDto;
 import com.ese.gondo.board3.Entity.Board;
 import com.ese.gondo.board3.Entity.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,16 +30,16 @@ public class BoardService {
     // 저장
     // requestDto를 받아서 BoardEntity의 @GeneratedValue 된 PK 값을 받을 수 있다.
     @Transactional
-    public Long insertBoard(final RequestDto requestDto) {
-        Board entity = boardRepository.save(requestDto.toEntity());
+    public Long insertBoard(final RequestBoardDto requestBoardDto) {
+        Board entity = boardRepository.save(requestBoardDto.toEntity());
         return entity.getId();
     }
 
     // 조회
     @Transactional
-    public ResponseDto viewBoard(final Long id) {
+    public ResponseBoardDto viewBoard(final Long id) {
         Board entity = boardRepository.findById(id).orElseThrow(() -> new NullPointerException());
-        return new ResponseDto(entity);
+        return new ResponseBoardDto(entity);
     }
 
 
@@ -53,11 +53,10 @@ public class BoardService {
 
 
     @Transactional
-    public Long updateBoard(RequestDto requestDto, final Long id) {
+    public Long updateBoard(RequestBoardDto requestBoardDto, final Long id) {
         Board entity = boardRepository.findById(id).orElseThrow(() -> new NullPointerException());
-        entity.update(requestDto);
-        log.info("Req {} , id {} ", requestDto, id);
-//        boardRepository.updateBoard(requestDto, id);
+        entity.update(requestBoardDto);
+        log.info("Req {} , id {} ", requestBoardDto, id);
         return id;
     }
 }

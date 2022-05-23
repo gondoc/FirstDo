@@ -17,6 +17,21 @@
         <java.version>11</java.version>
     </properties>
     <dependencies>
+        <!--        Jasypt-->
+        <dependency>
+
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>3.0.4</version>
+        </dependency>
+
+        <!-- Spring-security 모듈 -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>5.6.3</version>
+        </dependency>
+
         <!--        junit-->
         <dependency>
             <groupId>junit</groupId>
@@ -84,11 +99,12 @@
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>3.4.0</version>
-        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.webjars</groupId>-->
+<!--            <artifactId>bootstrap</artifactId>-->
+<!--            <version>3.4.0</version>-->
+<!--        </dependency>-->
 
     </dependencies>
 
