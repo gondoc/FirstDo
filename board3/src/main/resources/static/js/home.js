@@ -1,6 +1,6 @@
 window.onload = () => {
     // 로그인이 안되어 있는 상태라면
-    if (!sessionStorage.getItem("userName")) {
+    if (!sessionStorage.getItem("userId")) {
         document.getElementById("location_edit").setAttribute("display", "none");
         document.getElementById("location_signUp").setAttribute("display", "inline-block");
         document.getElementById("location_findId").setAttribute("display", "inline-block");

@@ -3,13 +3,12 @@ package com.ese.gondo.board3.Entity;
 import com.ese.gondo.board3.Dto.RequestBoardDto;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 
 @Getter
-@NoArgsConstructor
+//@NoArgsConstructor
 @Entity
 @Table(name = "BOARD")
 public class Board {
@@ -19,6 +18,9 @@ public class Board {
     private Long id;
     private String title;
     private String content;
+
+    private Board() {
+    }
 
     @Builder
     public Board(String title, String content){

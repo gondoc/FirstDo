@@ -45,6 +45,4 @@ public class UserRestController {
         log.info("Long id {}, RequestDto requestDto {} " , id, requestUserDto);
         return userService.updateUser(requestUserDto, id);
     }
-
-
 }
