@@ -1,0 +1,1 @@
+const str : String = '123';
