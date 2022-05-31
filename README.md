@@ -4,6 +4,8 @@
 
 	과제 진행중 : react, typeScript 번들링 -> node.js / spring
 	npm + typeScript
+	webpack bundling
+	(* bundling : 모듈화된 소스 코드를 브라우저에서 실행할 수 있는 파일로 한데 묶어 연결해주는 작업)
 	
 	react + typeScript 형태로 ol 띄워볼 것.
 
